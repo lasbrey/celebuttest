@@ -3,13 +3,13 @@
     "id": 1,
     "author": "Alice Smith",
     "type": "video",
-    "image": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "media": "https://www.w3schools.com/html/mov_bbb.mp4",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
     "aspectRatio": "4/5"
   },
   {
     "id": 2,
-    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
@@ -18,7 +18,7 @@
   },
   {
     "id": 3,
-    "image": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
@@ -26,14 +26,14 @@
   },
   {
     "id": 4,
-    "image": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80"
   },
   {
     "id": 5,
-    "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
@@ -41,7 +41,7 @@
   },
   {
     "id": 6,
-    "image": "https://images.unsplash.com/photo-1527015175922-36a306cf0e20?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1527015175922-36a306cf0e20?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
@@ -49,7 +49,7 @@
   },
   {
     "id": 7,
-    "image": "https://images.unsplash.com/photo-1496024840928-4c417adf211d?w=800&q=80",
+    "media": "https://images.unsplash.com/photo-1496024840928-4c417adf211d?w=800&q=80",
     "author": "Alice Smith",
     "type": "image",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
@@ -59,7 +59,7 @@
     "id": 8,
     "author": "Alice Smith",
     "type": "video",
-    "image": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "media": "https://www.w3schools.com/html/mov_bbb.mp4",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
     "promotion": true
   }

@@ -37,7 +37,7 @@ export default function CelebrationsPage() {
             >
               {celebration.type === "video" ? (
                 <video
-                  src={celebration.image}
+                  src={celebration.media}
                   autoPlay
                   muted
                   loop
@@ -46,7 +46,7 @@ export default function CelebrationsPage() {
                 />
               ) : (
                 <img
-                  src={celebration.image}
+                  src={celebration.media}
                   alt=""
                   className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />

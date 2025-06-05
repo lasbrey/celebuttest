@@ -1,5 +1,4 @@
 "use client";
-
 import { useParams, useRouter } from "next/navigation";
 import {
   Heart,
@@ -16,8 +15,8 @@ import {
 } from "lucide-react";
 
 interface Celebration {
-  image: string;
-  video?: string;
+  type: "image" | "video";
+  media: string;
   author: string;
   avatar: string;
   description: string;
@@ -26,11 +25,13 @@ interface Celebration {
 
 const celebrations: { [key: number]: Celebration } = {
   1: {
-    video: "",
-    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80",
+    type: "image",
+    media: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80",
     author: "Alice Smith",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    
+    description:
+      "Birthday wishes are special moments that deserve to be shared. Here's to another year of joy, growth, and unforgettable memories! 🎉",
+    date: "March 15, 2024",
   },
 };
 
@@ -42,13 +43,12 @@ export default function CelebrationDetailPage() {
 
   if (!celebration) return <div>Celebration not found</div>;
 
- return (
-  <div className="min-h-screen flex items-center justify-center p-4">
-    <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-lg">
-      <div className="relative w-full h-screen">
-        {celebration.video ? (
+  return (
+    <div className="h-[90vh] flex justify-center">
+      <div className="relative h-full w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-lg">
+        {celebration.type === "video" ? (
           <video
-            src={celebration.video}
+            src={celebration.media}
             autoPlay
             muted
             loop
@@ -57,13 +57,12 @@ export default function CelebrationDetailPage() {
           />
         ) : (
           <img
-            src={celebration.image}
+            src={celebration.media}
             alt={celebration.author}
             className="w-full h-full object-cover"
           />
         )}
 
-        {/* Author info - top left */}
         <div className="absolute bottom-24 left-4 flex items-center space-x-3 z-10">
           <img
             src={celebration.avatar}
@@ -76,23 +75,20 @@ export default function CelebrationDetailPage() {
           </div>
         </div>
 
-        {/* Vertical icon bar */}
-        <div className="absolute right-[-48px] top-1/4 flex flex-col items-center space-y-6 z-10">
+        <div className="absolute right-4 top-1/4 flex flex-col items-center space-y-6 z-10">
           {[Gift, Award, Calendar, Download, Bookmark, MoreHorizontal].map((Icon, index) => (
             <button
               key={index}
-              className="bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+              className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-all duration-200"
             >
               <Icon className="h-6 w-6 text-gray-600" />
             </button>
           ))}
         </div>
 
-        {/* Bottom overlay text & interaction */}
         <div className="absolute bottom-0 w-full px-4 py-4 bg-gradient-to-t from-black via-black/60 to-transparent text-white text-sm">
           <p className="mb-3">{celebration.description}</p>
 
-          {/* Interaction bar with 4 items */}
           <div className="flex items-center justify-between px-2">
             <div className="flex items-center space-x-1">
               <Heart className="w-6 h-6 text-yellow-300" />
@@ -107,7 +103,6 @@ export default function CelebrationDetailPage() {
           </div>
         </div>
 
-        {/* Back Button */}
         <button
           onClick={() => router.back()}
           className="absolute top-4 left-4 z-20 bg-white/70 hover:bg-white text-black px-3 py-1 rounded-full flex items-center space-x-2 shadow"
@@ -117,6 +112,5 @@ export default function CelebrationDetailPage() {
         </button>
       </div>
     </div>
-  </div>
-);
+  );
 }
