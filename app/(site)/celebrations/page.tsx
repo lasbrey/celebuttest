@@ -1,104 +1,60 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Stories from "@/components/celebration/Stories";
-
-const celebrations = [
-  {
-    id: 1,
-    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "4/5",
-  },
-  {
-    id: 2,
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "1/1",
-  },
-  {
-    id: 3,
-    image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "3/4",
-  },
-  {
-    id: 4,
-    image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "4/3",
-    promotion: true,
-  },
-  {
-    id: 5,
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "1/1",
-  },
-  {
-    id: 6,
-    image: "https://images.unsplash.com/photo-1527015175922-36a306cf0e20?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "3/4",
-  },
-  {
-    id: 7,
-    image: "https://images.unsplash.com/photo-1496024840928-4c417adf211d?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "4/3",
-  },
-  {
-    id: 8,
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80",
-    author: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-    aspectRatio: "4/5",
-    promotion: true,
-  },
-];
+import celebrations from "@/data/celebration.json";
 
 export default function CelebrationsPage() {
+
   return (
-    <div >
-       <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold">Celebrations</h1>
-          <Link
-            href="/createcelebration"
-            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/50"
-          >
-           Create Celebration
-          </Link>
-        </div>
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-semibold">Celebrations</h1>
+        <Link
+          href="/createcelebration"
+          className="bg-[#F5BD4B] text-white px-4 py-2 rounded-lg hover:bg-primary/50"
+        >
+          Create Celebration
+        </Link>
+      </div>
+
       <Stories />
 
-      <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 mx-auto ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
         {celebrations.map((celebration) => (
           <Link
             key={celebration.id}
             href={`/celebrations/${celebration.id}`}
-            className="block mb-4 relative group"
+            className={`relative group ${celebration.promotion ? "xl:col-span-2 xl:row-span-2" : ""
+              }`}
           >
             <div
-              className="relative rounded-xl overflow-hidden break-inside-avoid"
-              style={{ aspectRatio: celebration.aspectRatio }}
+              className={`relative rounded-xl overflow-hidden w-full h-full`}
+              style={{
+                aspectRatio: celebration.promotion ? "auto" : celebration.aspectRatio,
+              }}
             >
-              <img
-                src={celebration.image}
-                alt=""
-                className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
+              {celebration.type === "video" ? (
+                <video
+                  src={celebration.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <img
+                  src={celebration.image}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              )}
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex flex-row items-center space-x-2">
                     <img
                       src={celebration.avatar}
                       alt={celebration.author}

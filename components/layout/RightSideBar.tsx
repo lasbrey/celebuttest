@@ -1,5 +1,6 @@
 import React from 'react';
-import { Bell, Plus, MoreVertical } from "lucide-react";
+import { Bell, MoreVertical } from "lucide-react";
+import Link from 'next/link';
 
 const friendSuggestions = [
     { name: "Julia Smith", username: "juliasmith" },
@@ -27,17 +28,15 @@ const celebrations = [
     },
 ];
 
-
-
 const RightSidebar = () => {
     return (
-        <aside className="p-4">
+        <aside className="space-y-6 bg-white rounded-2xl p-6">
             <div>
                 {/* Friend Suggestions */}
-                <div className='bg-white p-4 rounded-lg shadow-md mb-6'>
+                <div className='p-4 mb-6'>
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold">Friend Suggestions</h3>
-                        <a href="#" className="text-sm text-primary">See All</a>
+                        <Link href="/friends" className="text-sm text-primary">See All</Link>
                     </div>
                     {friendSuggestions.map(({ name, username }) => (
                         <div key={username} className="flex items-center justify-between py-2">
@@ -52,15 +51,15 @@ const RightSidebar = () => {
                                     <p className="text-sm text-gray-500">@{username}</p>
                                 </div>
                             </div>
-                            <button className="text-primary">
-                                <Plus className="h-5 w-5" />
+                            <button className="text-white bg-primary px-4 py-1 rounded-lg text-sm hover:bg-primary/20">
+                                Follow
                             </button>
                         </div>
                     ))}
                 </div>
 
                 {/* Upcoming Celebrations */}
-                <div className='bg-white p-4 rounded-lg shadow-md mb-6'>
+                <div className='p-4 mb-6'>
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold">Upcoming Celebrations</h3>
                         <button>
@@ -70,7 +69,7 @@ const RightSidebar = () => {
                     {celebrations.map((celebration, index) => (
                         <div
                             key={index}
-                            className="flex items-center justify-between bg-white p-4 rounded-xl"
+                            className="flex items-center justify-between py-4"
                         >
                             <div className="flex items-center space-x-3">
                                 <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-xl">

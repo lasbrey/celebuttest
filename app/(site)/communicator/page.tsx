@@ -70,7 +70,7 @@ export default function MessagesPage() {
                   placeholder="Search messages..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
               </div>
             </div>
@@ -106,10 +106,10 @@ export default function MessagesPage() {
                         {conversation.lastMessage.time}
                       </span>
                       {conversation.lastMessage.unread && (
-                        <div className="w-2 h-2 bg-blue-600 rounded-xl" />
+                        <div className="w-2 h-2 bg-yellow-600 rounded-xl" />
                       )}
                       {conversation.isPinned && (
-                        <Pin className="h-4 w-4 text-blue-600" />
+                        <Pin className="h-4 w-4 text-yellow-600" />
                       )}
                     </div>
                   </div>

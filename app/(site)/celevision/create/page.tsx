@@ -197,7 +197,7 @@ export default function CreateStreamPage() {
                   <Label className="text-gray-800">Description</Label>
                   <textarea
                     rows={3}
-                    className="mt-1 w-full bg-white border border-gray-200 rounded-lg p-3 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 w-full bg-white border border-gray-200 rounded-lg p-3 text-black placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                     placeholder="Describe your stream..."
                   />
                 </div>
@@ -251,15 +251,15 @@ export default function CreateStreamPage() {
 
                 <button className="w-full flex items-center justify-between p-4 bg-white/50 rounded-xl hover:bg-white transition-colors">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-600/20 rounded-lg">
-                      <ImageIcon className="h-5 w-5 text-blue-400" />
+                    <div className="p-2 bg-yellow-600/20 rounded-lg">
+                      <ImageIcon className="h-5 w-5 text-yellow-400" />
                     </div>
                     <div className="text-left">
                       <h3 className="font-medium text-black">Virtual Backgrounds</h3>
                       <p className="text-sm text-gray-400">Choose from preset backgrounds</p>
                     </div>
                   </div>
-                  <Sparkles className="h-5 w-5 text-blue-400" />
+                  <Sparkles className="h-5 w-5 text-yellow-400" />
                 </button>
               </div>
             </div>

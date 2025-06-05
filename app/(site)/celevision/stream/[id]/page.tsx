@@ -89,7 +89,7 @@ export default function StreamPage() {
                     <Heart className="h-5 w-5" />
                     <span>{stream.likes}</span>
                   </button>
-                  <button className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                  <button className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-yellow-700">
                     <Gift className="h-5 w-5" />
                     <span>Send Gift</span>
                   </button>
@@ -152,9 +152,9 @@ export default function StreamPage() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Send a message"
-                    className="flex-1 bg-gray-200 text-gray-800 placeholder-gray-400 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 bg-gray-200 text-gray-800 placeholder-gray-400 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
-                  <button className="p-2 text-blue-500 hover:text-blue-400">
+                  <button className="p-2 text-yellow-500 hover:text-yellow-400">
                     <Send className="h-5 w-5" />
                   </button>
                 </div>

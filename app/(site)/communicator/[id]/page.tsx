@@ -152,12 +152,12 @@ export default function ChatPage() {
                     <p>{msg.text}</p>
                     <div className="flex items-center justify-end space-x-1 mt-1">
                       <span className={`text-xs ${
-                        msg.sender === "me" ? "text-blue-100" : "text-gray-500"
+                        msg.sender === "me" ? "text-yellow-100" : "text-gray-500"
                       }`}>
                         {msg.time}
                       </span>
                       {msg.sender === "me" && (
-                        <div className="text-blue-100">
+                        <div className="text-yellow-100">
                           {msg.status === "read" ? (
                             <CheckCheck className="h-4 w-4" />
                           ) : (
@@ -221,7 +221,7 @@ export default function ChatPage() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary text-white p-2 rounded-xl hover:bg-blue-700 transition-colors"
+                  className="bg-primary text-white p-2 rounded-xl hover:bg-yellow-700 transition-colors"
                 >
                   <Send className="h-5 w-5" />
                 </button>
@@ -264,7 +264,7 @@ export default function ChatPage() {
                       key={item}
                       className="flex items-center space-x-2 p-2 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
                     >
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
                         <Paperclip className="h-5 w-5 text-primary" />
                       </div>
                       <div>

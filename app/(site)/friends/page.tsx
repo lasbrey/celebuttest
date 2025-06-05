@@ -90,7 +90,7 @@ export default function FriendsPage() {
 
         <div className="grid grid-cols-12 gap-6">
           {/* Main Content */}
-          <div className="col-span-8">
+          <div className="col-span-12">
             <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
               <div className="flex items-center space-x-4 mb-6">
                 <div className="flex-1 relative">
@@ -154,61 +154,6 @@ export default function FriendsPage() {
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="col-span-4 space-y-6">
-            {/* Friend Suggestions */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-semibold">Suggested Friends</h2>
-                <button className="text-sm text-primary hover:text-primary">See All</button>
-              </div>
-              <div className="space-y-4">
-                {suggestions.map((suggestion) => (
-                  <div key={suggestion.id} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <img
-                        src={suggestion.avatar}
-                        alt={suggestion.name}
-                        className="w-10 h-10 rounded-md"
-                      />
-                      <div>
-                        <h3 className="font-medium">{suggestion.name}</h3>
-                        <p className="text-sm text-gray-500">{suggestion.occupation}</p>
-                      </div>
-                    </div>
-                    <button className="text-primary hover:text-primary">
-                      <UserPlus className="h-5 w-5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Upcoming Birthdays */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-semibold mb-6">Upcoming Celebrations</h2>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 p-3 bg-amber-50 rounded-lg">
-                  <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-xl">
-                    🎂
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Mai Senpai's Birthday</h3>
-                    <p className="text-sm text-gray-500">in 3 days</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-blue-100/50 rounded-lg">
-                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-xl">
-                    🎉
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Julia's Birthday</h3>
-                    <p className="text-sm text-gray-500">in 1 week</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

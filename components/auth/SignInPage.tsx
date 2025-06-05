@@ -5,10 +5,17 @@ import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, Smartphone, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [qrExpiry, setQrExpiry] = useState(300); 
+  const [qrExpiry, setQrExpiry] = useState(300); // 5 minutes in seconds
+  const router = useRouter();
+
+  const handleSignIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push("/celebrations");
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
@@ -28,7 +35,7 @@ export default function SignInPage() {
           </TabsList>
 
           <TabsContent value="credentials" className="mt-8">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSignIn}>
               <div className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">

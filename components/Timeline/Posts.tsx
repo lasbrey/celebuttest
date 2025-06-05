@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
-import { MessageCircle, MoreVertical, Image, Bookmark, Forward, Star, SendHorizonal } from "lucide-react";
+import { MoreVertical, Image as ImageIcon, Bookmark, SendHorizonal } from "lucide-react";
+import Image from 'next/image';
 
 const Posts = () => {
     return (
@@ -35,20 +38,19 @@ const Posts = () => {
                         />
                     </div>
 
+                    {/* Replaced icons */}
                     <div className="flex items-center justify-between mt-4 pt-4 border-t">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-10">
                             <button className="flex items-center space-x-2 text-gray-500">
-                                <span>
-                                    <Star className="h-5 w-5" />
-                                </span>
+                                <Image src="/icons/like.svg" alt="Like" width={20} height={20} />
                                 <span>30</span>
                             </button>
                             <button className="flex items-center space-x-2 text-gray-500">
-                                <MessageCircle className="h-5 w-5" />
+                                <Image src="/icons/comment.svg" alt="Comment" width={20} height={20} />
                                 <span>12 Comments</span>
                             </button>
                             <button className="flex items-center space-x-2 text-gray-500">
-                                <Forward className="h-5 w-5" />
+                                <Image src="/icons/share.svg" alt="Share" width={20} height={20} />
                                 <span>5 Shares</span>
                             </button>
                         </div>
@@ -73,7 +75,7 @@ const Posts = () => {
                                 className="flex-1 bg-white border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                             <button className="p-2 hover:bg-gray-100 rounded-xl">
-                                <Image className="h-5 w-5 text-gray-500" />
+                                <ImageIcon className="h-5 w-5 text-gray-500" />
                             </button>
                             <button className="p-2 hover:bg-gray-100 rounded-xl">
                                 <SendHorizonal className="h-5 w-5 text-gray-500" />

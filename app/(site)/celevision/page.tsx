@@ -126,7 +126,7 @@ export default function CelevisionPage() {
             <input
               type="text"
               placeholder="Search streams..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
           </div>
           <button className="p-2 border rounded-lg hover:bg-gray-50">

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import LeftSideBar from '@/components/layout/LeftSideBar';
 import RightSideBar from '@/components/layout/RightSideBar';
@@ -13,12 +12,9 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const pathname = usePathname();
-
-    const isHomePage = pathname === '/feed';
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen  ">
             <Header onMenuClick={() => setIsMobileMenuOpen(true)} />
 
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -29,18 +25,20 @@ export default function DashboardLayout({
                 </SheetContent>
             </Sheet>
 
-            {/* MAIN LAYOUT */}
-            <div className="flex flex-1 overflow-hidden px-2 md:px-5 pt-5 lg:max-w-7xl lg:mx-auto w-full">
+            <div className="flex flex-1 overflow-hidden px-2 md:px-5 lg:max-w-7xl lg:mx-auto pt-5">
                 <div className="hidden md:block w-64 overflow-y-auto h-full">
                     <LeftSideBar />
                 </div>
 
-                <main className="flex-1 overflow-y-auto h-full lg:max-w-4xl lg:mx-auto">
-                    <div className="px-4">
+                <main className="flex-1 overflow-y-auto h-full lg:max-w-3xl lg:mx-auto">
+                    <div className=" px-4">
                         {children}
                     </div>
                 </main>
 
+                <div className="hidden md:block w-72 lg:w-80 overflow-y-auto h-full">
+                    <RightSideBar />
+                </div>
             </div>
         </div>
     );
