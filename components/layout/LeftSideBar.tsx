@@ -10,16 +10,33 @@ import {
   Radio,
   Bell,
   Settings,
+  LucideIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
+// Types
+type IconType = LucideIcon | ((isActive: boolean) => ReactNode);
+
+interface MenuItem {
+  name: string;
+  href: string;
+  icon: IconType;
+}
+
+interface BusinessItem {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+// Component
 const LeftSideBar = () => {
   const pathname = usePathname();
-
   const activeColor = '#FAB937';
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       name: 'Celebrations',
       href: '/celebrations',
@@ -62,15 +79,16 @@ const LeftSideBar = () => {
     { name: 'Settings', href: '/settings', icon: Settings },
   ];
 
-  const businessItems = [
+  const businessItems: BusinessItem[] = [
     { name: 'Facebook', href: '#', icon: Star },
     { name: 'Twitter', href: '#', icon: Star },
     { name: 'Instagram', href: '#', icon: Star },
   ];
 
   return (
-    <aside className="flex flex-col pt-5 h-full bg-white rounded-2xl">
+    <aside className="flex flex-col pt-5 h-full bg-white rounded-2xl w-full max-w-[260px]">
       <div className="flex flex-col flex-grow">
+        {/* Profile Header */}
         <div className="flex flex-col p-4">
           <Link href="/profile" className="flex items-center space-x-3">
             <img
@@ -84,6 +102,7 @@ const LeftSideBar = () => {
           </Link>
         </div>
 
+        {/* Menu Section */}
         <div className="p-4 my-2">
           <nav className="space-y-2 mb-5">
             {menuItems.map((item) => {
@@ -95,15 +114,13 @@ const LeftSideBar = () => {
                   key={item.name}
                   href={item.href}
                   className={`flex items-center space-x-3 py-2.5 px-3 rounded-lg hover:bg-gray-100 ${
-                    isActive ? 'bg-primary/20 font-semibold' : ''
+                    isActive ? 'bg-yellow-100 font-semibold' : ''
                   }`}
                 >
                   <span className="py-2 rounded-lg">
-                    {typeof item.icon === 'function' ? (
-                      item.icon(isActive)
-                    ) : (
-                      <item.icon className="h-6 w-6" color={color} />
-                    )}
+                    {typeof item.icon === 'function'
+                      ? item.icon(isActive)
+                      : React.createElement(item.icon, { className: 'h-6 w-6', color })}
                   </span>
                   <span className="font-medium">{item.name}</span>
                 </Link>
@@ -111,7 +128,8 @@ const LeftSideBar = () => {
             })}
           </nav>
 
-          <h2 className="mt-4 font-semibold">Business You Like</h2>
+          {/* Business Section */}
+          <h2 className="mt-4 font-semibold text-sm text-gray-500">Business You Like</h2>
           <nav className="space-y-2 flex-grow">
             {businessItems.map((item) => (
               <Link
@@ -125,6 +143,8 @@ const LeftSideBar = () => {
                 <span className="font-medium">{item.name}</span>
               </Link>
             ))}
+
+            {/* See More */}
             <h2 className="mt-4 font-semibold cursor-pointer hover:bg-gray-100 p-3 rounded-lg">
               See More
             </h2>
