@@ -11,12 +11,12 @@ export default function NotFound() {
       <p className="text-lg mb-6">
         Sorry, the page you were looking for doesn't exist.
       </p>
-      <button
+      <div
         onClick={() => router.back()}
         className="px-6 py-3 bg-primary hover:bg-primary/50 transition rounded-xl text-black"
       >
         Go Back
-      </button>
+      </div>
     </div>
   )
 }
