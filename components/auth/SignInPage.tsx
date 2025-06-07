@@ -72,7 +72,6 @@ export default function SignInPage() {
       if (response.error) {
         setErrors({ general: response.message || response.error });
       } else {
-        // Successful login - redirect to dashboard
         router.push('/celebrations');
       }
     } catch (error: any) {

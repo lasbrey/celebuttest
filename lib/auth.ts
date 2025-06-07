@@ -153,6 +153,6 @@ export const logout = async (): Promise<void> => {
   await apiClient.logout();
   // Redirect to login page
   if (typeof window !== 'undefined') {
-    window.location.href = '/auth/sign-in';
+    window.location.href = '/';
   }
 };

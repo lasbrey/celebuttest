@@ -114,7 +114,7 @@ export default function ResetPasswordPage() {
         setErrors({ general: response.message || response.error });
       } else {
         // Password reset successful - redirect to login
-        router.push('/auth/sign-in?reset=true');
+        router.push('/?reset=true');
       }
     } catch (error: any) {
       setErrors({ general: error.message || 'An error occurred while resetting password' });
@@ -303,7 +303,7 @@ export default function ResetPasswordPage() {
 
           <div className="mt-6">
             <Link
-              href="/auth/sign-in"
+              href="/"
               className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               Back to Sign in
