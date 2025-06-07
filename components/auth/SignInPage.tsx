@@ -2,19 +2,84 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, Smartphone, ArrowLeft } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Smartphone, ArrowLeft, Loader2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { apiClient, LoginPayload } from "@/lib/api";
+import { validateEmail, generateFCMToken } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 
 export default function SignInPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [qrExpiry, setQrExpiry] = useState(300); // 5 minutes in seconds
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [qrExpiry, setQrExpiry] = useState(300);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false,
+  });
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+
+    // Clear errors when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/celebrations");
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      // Validate form
+      const newErrors: Record<string, string> = {};
+
+      if (!formData.email) {
+        newErrors.email = 'Email is required';
+      } else if (!validateEmail(formData.email)) {
+        newErrors.email = 'Please enter a valid email address';
+      }
+
+      if (!formData.password) {
+        newErrors.password = 'Password is required';
+      }
+
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        setIsLoading(false);
+        return;
+      }
+
+      const payload: LoginPayload = {
+        email: formData.email,
+        password: formData.password,
+        fcm_token: generateFCMToken(),
+      };
+
+      const response = await apiClient.login(payload);
+
+      if (response.error) {
+        setErrors({ general: response.message || response.error });
+      } else {
+        // Successful login - redirect to dashboard
+        router.push('/celebrations');
+      }
+    } catch (error: any) {
+      setErrors({ general: error.message || 'An error occurred during sign in' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -27,6 +92,12 @@ export default function SignInPage() {
           <h2 className="text-2xl font-semibold text-gray-900">Welcome Back!</h2>
           <p className="mt-2 text-gray-600">Sign in to continue celebrating with your friends</p>
         </div>
+
+        {errors.general && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-600 text-sm">{errors.general}</p>
+          </div>
+        )}
 
         <Tabs defaultValue="credentials" className="w-full">
           <TabsList className="grid grid-cols-2 w-full">
@@ -50,10 +121,16 @@ export default function SignInPage() {
                       name="email"
                       type="email"
                       required
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={cn(
+                        "block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-yellow-500 focus:border-yellow-500",
+                        errors.email ? "border-red-300" : "border-gray-300"
+                      )}
                       placeholder="Enter Email address"
                     />
                   </div>
+                  {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -69,7 +146,12 @@ export default function SignInPage() {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       required
-                      className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className={cn(
+                        "block w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-yellow-500 focus:border-yellow-500",
+                        errors.password ? "border-red-300" : "border-gray-300"
+                      )}
                       placeholder="••••••••••••••••"
                     />
                     <button
@@ -84,18 +166,21 @@ export default function SignInPage() {
                       )}
                     </button>
                   </div>
+                  {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
-                    id="remember-me"
-                    name="remember-me"
+                    id="rememberMe"
+                    name="rememberMe"
                     type="checkbox"
+                    checked={formData.rememberMe}
+                    onChange={handleInputChange}
                     className="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                  <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
                     Remember me
                   </label>
                 </div>
@@ -112,9 +197,17 @@ export default function SignInPage() {
 
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                disabled={isLoading}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Sign in
+                {isLoading ? (
+                  <>
+                    <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                    Signing in...
+                  </>
+                ) : (
+                  'Sign in'
+                )}
               </button>
             </form>
           </TabsContent>
@@ -143,7 +236,7 @@ export default function SignInPage() {
                   1. Open CELEBUT app on your phone
                 </p>
                 <p className="text-gray-600">
-                  2. Tap <Smartphone className="h-4 w-4 inline mb-1" /> Profile &gt; Scan QR Code
+                  2. Tap <Smartphone className="h-4 w-4 inline mb-1" /> Profile > Scan QR Code
                 </p>
                 <p className="text-gray-600">
                   3. Point your camera at this screen
