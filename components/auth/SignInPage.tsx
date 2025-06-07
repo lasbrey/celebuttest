@@ -235,7 +235,7 @@ export default function SignInPage() {
                   1. Open CELEBUT app on your phone
                 </p>
                 <p className="text-gray-600">
-                  2. Tap <Smartphone className="h-4 w-4 inline mb-1" /> Profile > Scan QR Code
+                  2. Tap <Smartphone className="h-4 w-4 inline mb-1" /> Profile Scan QR Code
                 </p>
                 <p className="text-gray-600">
                   3. Point your camera at this screen
