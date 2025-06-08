@@ -1,5 +1,4 @@
-import { ApiResponse } from "@/types/auth";
-
+import { ApiResponse } from '@/types/apiResponse';
 export class BaseApiClient {
   protected baseURL: string;
 
