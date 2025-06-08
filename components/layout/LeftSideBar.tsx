@@ -1,11 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import { MessageCircle, Users, Wallet, Star, Radio, Bell, Settings, DivideIcon as LucideIcon } from 'lucide-react';
+import {
+  MessageCircle,
+  Users,
+  Wallet,
+  Star,
+  Radio,
+  Bell,
+  Settings,
+  type LucideIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ReactNode } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserDisplayName, getUserAvatar } from '@/lib/auth';
 
