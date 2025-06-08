@@ -1,3 +1,4 @@
+"use client";
 import { Mail, Globe, MapPin, Building, Calendar, Phone } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
