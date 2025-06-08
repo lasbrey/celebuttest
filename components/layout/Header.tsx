@@ -80,7 +80,7 @@ const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                                <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
                                     <LogOut className="h-4 w-4 mr-2" />
                                     Sign out
                                 </DropdownMenuItem>

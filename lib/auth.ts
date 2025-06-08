@@ -1,4 +1,4 @@
-import { apiClient } from './api';
+import { authApi, userApi } from '@/api/apiClient';
 
 export interface AuthUser {
   id: string;
@@ -23,36 +23,76 @@ export interface AuthState {
 
 // Country codes for phone number validation
 export const COUNTRY_CODES = [
-  { code: '+1', country: 'US', flag: '🇺🇸' },
-  { code: '+44', country: 'UK', flag: '🇬🇧' },
-  { code: '+234', country: 'NG', flag: '🇳🇬' },
-  { code: '+91', country: 'IN', flag: '🇮🇳' },
-  { code: '+86', country: 'CN', flag: '🇨🇳' },
-  { code: '+81', country: 'JP', flag: '🇯🇵' },
-  { code: '+49', country: 'DE', flag: '🇩🇪' },
-  { code: '+33', country: 'FR', flag: '🇫🇷' },
+  { code: '1', country: 'US', flag: '🇺🇸' },
+  { code: '44', country: 'UK', flag: '🇬🇧' },
+  { code: '234', country: 'NG', flag: '🇳🇬' },
+  { code: '91', country: 'IN', flag: '🇮🇳' },
+  { code: '86', country: 'CN', flag: '🇨🇳' },
+  { code: '81', country: 'JP', flag: '🇯🇵' },
+  { code: '49', country: 'DE', flag: '🇩🇪' },
+  { code: '33', country: 'FR', flag: '🇫🇷' },
 ];
 
 // Industry options for business signup
-export const INDUSTRIES = [
-  'entertainment',
-  'technology',
-  'healthcare',
-  'finance',
-  'education',
-  'retail',
-  'hospitality',
-  'manufacturing',
-  'consulting',
-  'other',
-];
+export const getIndustriesFromApi = async (): Promise<string[]> => {
+  try {
+    const response = await authApi.getIndustries();
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    }
+    return [];
+  } catch (error) {
+    console.error("Failed to fetch industries:", error);
+    return [];
+  }
+};
+
+// export const INDUSTRIES = [
+//   'entertainment',
+//   'technology',
+//   'healthcare',
+//   'finance',
+//   'education',
+//   'retail',
+//   'hospitality',
+//   'manufacturing',
+//   'consulting',
+//   'other',
+// ];
 
 // Utility functions
-export const formatPhoneNumber = (countryCode: string, phoneNumber: string): string => {
-  // Remove any existing country code from phone number
-  const cleanNumber = phoneNumber.replace(/^\+?\d{1,4}/, '').replace(/\D/g, '');
-  return `${countryCode}${cleanNumber}`;
+export const formatPhoneNumber = (
+  countryCodeWithPlus: string,
+  rawPhone: string
+): { isValid: boolean; formattedNumber?: string; error?: string } => {
+  const countryCode = countryCodeWithPlus.replace('+', '');
+  let cleanNumber = rawPhone.replace(/\D/g, '');
+
+  if (!cleanNumber) {
+    return { isValid: false, error: 'Phone number is required' };
+  }
+
+  // Special case: remove leading zero for Nigerian numbers
+  if (countryCode === '234' && cleanNumber.startsWith('0')) {
+    cleanNumber = cleanNumber.slice(1);
+  }
+
+  const fullNumber = `+${countryCode}${cleanNumber}`;
+
+  // Validate total length
+  if (fullNumber.length < 10 || fullNumber.length > 16) {
+    return {
+      isValid: false,
+      error: 'Phone number must be between 10 and 15 digits with country code',
+    };
+  }
+
+  return {
+    isValid: true,
+    formattedNumber: fullNumber,
+  };
 };
+
 
 export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -140,13 +180,13 @@ export const formatDateForAPI = (date: string): string => {
 
 // Check if user is authenticated
 export const isAuthenticated = (): boolean => {
-  return apiClient.isAuthenticated();
+  return authApi.isAuthenticated();
 };
 
 // Get current user
 export const getCurrentUser = async (): Promise<AuthUser | null> => {
   try {
-    const response = await apiClient.getSelf();
+    const response = await userApi.getSelf();
     return response.data || null;
   } catch (error) {
     console.error('Failed to get current user:', error);
@@ -156,7 +196,7 @@ export const getCurrentUser = async (): Promise<AuthUser | null> => {
 
 // Logout user
 export const logout = async (): Promise<void> => {
-  await apiClient.logout();
+  await authApi.logout();
   // Redirect to login page
   if (typeof window !== 'undefined') {
     window.location.href = '/';

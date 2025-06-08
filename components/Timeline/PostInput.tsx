@@ -23,7 +23,12 @@ const PostInput = () => {
                     <span>Photo/Video</span>
                 </button>
                 <button className="flex items-center justify-center space-x-2 py-2.5 rounded-xl hover:bg-gray-50 text-gray-700 text-sm">
-                    <Image src="/celebration.png" alt="Celebration" width={20} height={20} />
+                    <Image
+                        src="/icons/celebration.svg"
+                        alt="Celebration"
+                        width={20}
+                        height={20}
+                    />
                     <span>Celebration</span>
                 </button>
                 <button className="flex items-center justify-center space-x-2 py-2.5 rounded-xl hover:bg-gray-50 text-gray-700 text-sm">

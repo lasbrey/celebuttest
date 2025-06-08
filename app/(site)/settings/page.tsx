@@ -6,8 +6,12 @@ import { Switch } from "@/components/ui/switch";
 
 const settingsItems = [
   { title: "Interests", link: "/settings/interests" },
-  { title: "Privacy and safety", link: "/settings/privacy" },
   { title: "Language", link: "/settings/language" },
+  { title: "Content Settings", link: "/settings/content" },
+  { title: "Banned Words", link: "/settings/banned-words" },
+  { title: "Blocked Users", link: "/settings/blocked-users" },
+  { title: "Notifications", link: "/settings/notifications" },
+  { title: "Privacy and safety", link: "/settings/privacy" },
   { title: "Change Password", link: "/settings/password" },
   { title: "Request for Verification", link: "/settings/verification" },
   { title: "Linked Devices", link: "/settings/devices" },
@@ -36,11 +40,6 @@ export default function SettingsPage() {
               <ChevronRight className="h-5 w-5 text-gray-400" />
             </Link>
           ))}
-
-          <div className="flex items-center justify-between p-4 bg-white rounded-lg">
-            <span className="font-medium">Notifications</span>
-            <Switch />
-          </div>
 
           <div className="flex items-center justify-between p-4 bg-white rounded-lg">
             <span className="font-medium">Celebration Post by Others for me</span>

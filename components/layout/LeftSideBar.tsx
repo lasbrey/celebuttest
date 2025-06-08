@@ -119,7 +119,7 @@ const LeftSideBar = () => {
         <div className="p-4 my-2">
           <nav className="space-y-2 mb-5">
             {menuItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname.startsWith(item.href);
               const color = isActive ? activeColor : '#000';
 
               return (

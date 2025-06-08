@@ -1,32 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, User, Mail, Lock, Calendar, Building, Phone, MapPin, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { apiClient, UserSignupPayload, BusinessSignupPayload } from "@/lib/api";
-import { 
-  COUNTRY_CODES, 
-  INDUSTRIES, 
-  validateEmail, 
-  validatePassword, 
+import { UserSignupPayload, BusinessSignupPayload } from "@/types/auth";
+
+import {
+  COUNTRY_CODES,
+  getIndustriesFromApi,
+  validateEmail,
+  validatePassword,
   validateUsername,
   formatPhoneNumber,
   formatDateForAPI,
   generateFCMToken
 } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import { authApi } from "@/api/apiClient";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [industries, setIndustries] = useState<string[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selectedCountryCode, setSelectedCountryCode] = useState('+1');
+
+  useEffect(() => {
+    async function loadIndustries() {
+      const data = await getIndustriesFromApi();
+      setIndustries(data);
+    }
+    loadIndustries();
+  }, []);
 
   // Form data
   const [userFormData, setUserFormData] = useState({
@@ -50,7 +61,7 @@ export default function SignUpPage() {
   const checkPasswordStrength = (password: string) => {
     const validation = validatePassword(password);
     setPasswordStrength(validation.strength);
-    
+
     if (password && !validation.isValid) {
       setErrors(prev => ({ ...prev, password: validation.errors[0] }));
     } else {
@@ -146,24 +157,30 @@ export default function SignUpPage() {
         return;
       }
 
+      const { isValid, formattedNumber, error } = formatPhoneNumber(selectedCountryCode, userFormData.phone_number);
+
+      if (!isValid) {
+        console.error(error);
+        return;
+      }
       const payload: UserSignupPayload = {
         country_code: selectedCountryCode,
         date_of_birth: formatDateForAPI(userFormData.date_of_birth),
         email: userFormData.email,
         full_name: userFormData.full_name,
         password: userFormData.password,
-        phone_number: formatPhoneNumber(selectedCountryCode, userFormData.phone_number),
+        phone_number: formattedNumber || "",
         username: userFormData.username,
       };
 
-      const response = await apiClient.signupUser(payload);
+      const response = await authApi.signupUser(payload);
 
-      if (response.error) {
-        setErrors({ general: response.message || response.error });
+      if (!response || response.error) {
+        setErrors({ general: response?.message || response?.error || 'Signup failed' });
       } else {
-        // Redirect to email verification or login
         router.push('/auth/verify?email=' + encodeURIComponent(userFormData.email));
       }
+
     } catch (error: any) {
       setErrors({ general: error.message || 'An error occurred during signup' });
     } finally {
@@ -205,23 +222,27 @@ export default function SignUpPage() {
         setIsLoading(false);
         return;
       }
+      const { isValid, formattedNumber, error } = formatPhoneNumber(selectedCountryCode, businessFormData.phone_number);
 
+      if (!isValid) {
+        console.error(error);
+        return;
+      }
       const payload: BusinessSignupPayload = {
         business_name: businessFormData.business_name,
         country_code: selectedCountryCode,
         email: businessFormData.email,
         industry: businessFormData.industry,
         password: businessFormData.password,
-        phone_number: formatPhoneNumber(selectedCountryCode, businessFormData.phone_number),
+        phone_number: formattedNumber || "",
         username: businessFormData.username,
       };
 
-      const response = await apiClient.signupBusiness(payload);
+      const response = await authApi.signupBusiness(payload);
 
-      if (response.error) {
-        setErrors({ general: response.message || response.error });
+      if (!response || response.error) {
+        setErrors({ general: response?.message || response?.error || 'Signup failed' });
       } else {
-        // Redirect to email verification or login
         router.push('/auth/verify?email=' + encodeURIComponent(businessFormData.email));
       }
     } catch (error: any) {
@@ -232,7 +253,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 pt-10">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center flex items-center flex-col">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-orange-500 text-transparent bg-clip-text mb-2">
@@ -601,15 +622,15 @@ export default function SignUpPage() {
                   <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
                     Industry
                   </label>
-                  <Select 
-                    value={businessFormData.industry} 
+                  <Select
+                    value={businessFormData.industry}
                     onValueChange={(value) => setBusinessFormData(prev => ({ ...prev, industry: value }))}
                   >
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select Industry" />
                     </SelectTrigger>
                     <SelectContent>
-                      {INDUSTRIES.map((industry) => (
+                      {industries.map((industry) => (
                         <SelectItem key={industry} value={industry}>
                           {industry.charAt(0).toUpperCase() + industry.slice(1)}
                         </SelectItem>

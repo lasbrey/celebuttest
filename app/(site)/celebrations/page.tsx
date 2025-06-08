@@ -12,7 +12,7 @@ export default function CelebrationsPage() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-semibold">Celebrations</h1>
         <Link
-          href="/createcelebration"
+          href="/celebrations/createcelebration"
           className="bg-[#F5BD4B] text-white px-4 py-2 rounded-lg hover:bg-primary/50"
         >
           Create Celebration

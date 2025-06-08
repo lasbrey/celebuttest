@@ -6,10 +6,11 @@ import { Eye, EyeOff, Mail, Lock, Smartphone, ArrowLeft, Loader2 } from "lucide-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { apiClient, LoginPayload } from "@/lib/api";
+import { LoginPayload } from "@/types/auth";
 import { validateEmail, generateFCMToken } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/hooks/useAuth';
+import { authApi } from "@/api/apiClient";
 
 
 export default function SignInPage() {
@@ -70,7 +71,7 @@ export default function SignInPage() {
         fcm_token: generateFCMToken(),
       };
 
-      const response = await apiClient.login(payload);
+      const response = await authApi.login(payload);
 
       if (response.error) {
         setErrors({ general: response.message || response.error });
