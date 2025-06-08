@@ -23,14 +23,11 @@ const ProfilePage = () => {
           <div className="col-span-2">
             <TabsSection />
             <CelebrationSection />
-
           </div>
           <div className="grid gap-5">
             <AboutSection />
             <FriendsSection />
           </div>
-
-          {/* Celebration Section */}
         </div>
       </div>
     </div>

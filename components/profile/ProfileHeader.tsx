@@ -1,22 +1,43 @@
 import { Share2, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
+import { getUserDisplayName, getUserAvatar } from "@/lib/auth";
 
 const ProfileHeader = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="relative -mt-24 mb-8 flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative -mt-24 mb-8 flex justify-between items-end">
       <div className="flex items-end">
         <div className="relative">
           <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
+            src={getUserAvatar(user)}
             alt="Profile"
-            className="w-48 h-48 rounded-2xl border-4 border-white shadow-lg"
+            className="w-48 h-48 rounded-2xl border-4 border-white shadow-lg object-cover"
           />
         </div>
         <div className="ml-6 mb-6">
-          <h1 className="text-3xl font-bold">Alice Smith</h1>
-          <p className="text-gray-600">@alicesmith</p>
+          <h1 className="text-3xl font-bold">{getUserDisplayName(user)}</h1>
+          <p className="text-gray-600">@{user.username}</p>
+          {user.email && (
+            <p className="text-gray-600">{user.email}</p>
+          )}
+          {user.account_type === 'business' && user.industry && (
+            <p className="text-gray-600 capitalize">{user.industry}</p>
+          )}
           <p className="mt-2 text-gray-600 max-w-xl">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus eros eu vehicula interdum.
+            {user.account_type === 'business' 
+              ? `Welcome to ${user.business_name || user.username}! We're here to help you celebrate life's special moments.`
+              : "Hi there! 👋 I'm here to celebrate life's amazing moments with friends and family."
+            }
           </p>
         </div>
       </div>

@@ -1,9 +1,7 @@
-import LeftSideBar from '@/components/layout/LeftSideBar';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import RightSideBar from '@/components/layout/RightSideBar';
-import Header from '@/components/layout/Header';
+import { AuthProvider } from '@/hooks/useAuth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#f2f4f7]`}>
-       {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

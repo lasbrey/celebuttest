@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 import { apiClient, LoginPayload } from "@/lib/api";
 import { validateEmail, generateFCMToken } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignInPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [qrExpiry, setQrExpiry] = useState(300);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +74,10 @@ export default function SignInPage() {
       if (response.error) {
         setErrors({ general: response.message || response.error });
       } else {
+        // Set user data in auth context
+        if (response.data?.user) {
+          login(response.data.user);
+        }
         router.push('/celebrations');
       }
     } catch (error: any) {

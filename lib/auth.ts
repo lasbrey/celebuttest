@@ -6,6 +6,12 @@ export interface AuthUser {
   username: string;
   full_name?: string;
   business_name?: string;
+  phone_number?: string;
+  date_of_birth?: string;
+  industry?: string;
+  avatar?: string;
+  is_verified?: boolean;
+  account_type?: 'user' | 'business';
   [key: string]: any;
 }
 
@@ -155,4 +161,17 @@ export const logout = async (): Promise<void> => {
   if (typeof window !== 'undefined') {
     window.location.href = '/';
   }
+};
+
+// Get user display name
+export const getUserDisplayName = (user: AuthUser): string => {
+  if (user.account_type === 'business') {
+    return user.business_name || user.username;
+  }
+  return user.full_name || user.username;
+};
+
+// Get user avatar with fallback
+export const getUserAvatar = (user: AuthUser): string => {
+  return user.avatar || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80";
 };

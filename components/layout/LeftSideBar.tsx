@@ -15,6 +15,8 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { getUserDisplayName, getUserAvatar } from '@/lib/auth';
 
 // Types
 type IconType = LucideIcon | ((isActive: boolean) => ReactNode);
@@ -34,6 +36,7 @@ interface BusinessItem {
 // Component
 const LeftSideBar = () => {
   const pathname = usePathname();
+  const { user } = useAuth();
   const activeColor = '#FAB937';
 
   const menuItems: MenuItem[] = [
@@ -85,6 +88,16 @@ const LeftSideBar = () => {
     { name: 'Instagram', href: '#', icon: Star },
   ];
 
+  if (!user) {
+    return (
+      <aside className="flex flex-col pt-5 h-full bg-white rounded-2xl w-full max-w-[260px]">
+        <div className="flex items-center justify-center p-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </aside>
+    );
+  }
+
   return (
     <aside className="flex flex-col pt-5 h-full bg-white rounded-2xl w-full max-w-[260px]">
       <div className="flex flex-col flex-grow">
@@ -92,12 +105,13 @@ const LeftSideBar = () => {
         <div className="flex flex-col p-4">
           <Link href="/profile" className="flex items-center space-x-3">
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
-              alt="Lazarus Lawal"
-              className="h-10 w-10 rounded-md"
+              src={getUserAvatar(user)}
+              alt={getUserDisplayName(user)}
+              className="h-10 w-10 rounded-md object-cover"
             />
             <div>
-              <h4 className="font-medium">Lazarus Lawal</h4>
+              <h4 className="font-medium">{getUserDisplayName(user)}</h4>
+              <p className="text-sm text-gray-500">@{user.username}</p>
             </div>
           </Link>
         </div>
