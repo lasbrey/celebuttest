@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { apiClient, LoginPayload } from "@/lib/api";
 import { validateEmail, generateFCMToken } from "@/lib/auth";
 import { cn } from "@/lib/utils";
-import { AuthProvider, useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 
 export default function SignInPage() {
