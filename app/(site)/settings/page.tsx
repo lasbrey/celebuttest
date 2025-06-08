@@ -23,9 +23,6 @@ export default function SettingsPage() {
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex items-center space-x-3 mb-6">
-          <button className="text-gray-600">
-            <ArrowLeft className="h-5 w-5" />
-          </button>
           <h1 className="text-2xl font-semibold">Settings</h1>
         </div>
 
