@@ -1,5 +1,5 @@
-import { ApiResponse } from '@/types/auth';
 import { BaseApiClient } from '@/api/baseApiClient';
+import { ApiResponse } from '@/types/apiResponse';
 
 export class UserApiClient extends BaseApiClient {
   async getSelf(): Promise<ApiResponse> {
