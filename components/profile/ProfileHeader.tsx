@@ -1,3 +1,4 @@
+"use client";
 import { Share2, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
