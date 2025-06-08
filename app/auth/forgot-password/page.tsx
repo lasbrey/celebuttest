@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, Loader2 } from "lucide-react";
-import { apiClient, ResetPasswordRequestPayload } from "@/lib/api";
+import { ResetPasswordRequestPayload } from "@/types/auth";
+import { authApi } from "@/api/apiClient";
 import { COUNTRY_CODES, formatPhoneNumber } from "@/lib/auth";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -36,11 +37,12 @@ export default function ForgotPasswordPage() {
         return;
       }
 
+      const formatted = formatPhoneNumber(selectedCountryCode, phoneNumber);
       const payload: ResetPasswordRequestPayload = {
-        phone_number: formatPhoneNumber(selectedCountryCode, phoneNumber),
+        phone_number: formatted.formattedNumber || "",
       };
 
-      const response = await apiClient.requestPasswordReset(payload);
+      const response = await authApi.requestPasswordReset(payload);
 
       if (response.error) {
         setError(response.message || response.error);

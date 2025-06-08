@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Lock, Loader2 } from "lucide-react";
 import { OTPInput } from "@/components/ui/input-otp";
-import { apiClient, ResetPasswordConfirmPayload } from "@/lib/api";
+import { ResetPasswordConfirmPayload } from "@/types/auth";
+import { authApi } from "@/api/apiClient";
 import { validatePassword } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -33,7 +34,7 @@ export default function ResetPasswordPage() {
   const checkPasswordStrength = (password: string) => {
     const validation = validatePassword(password);
     setPasswordStrength(validation.strength);
-    
+
     if (password && !validation.isValid) {
       setErrors(prev => ({ ...prev, password: validation.errors[0] }));
     } else {
@@ -108,7 +109,7 @@ export default function ResetPasswordPage() {
         token: code,
       };
 
-      const response = await apiClient.confirmPasswordReset(payload);
+      const response = await authApi.confirmPasswordReset(payload);
 
       if (response.error) {
         setErrors({ general: response.message || response.error });
@@ -158,9 +159,8 @@ export default function ResetPasswordPage() {
                     {slots.map((slot, idx) => (
                       <div
                         key={idx}
-                        className={`w-10 h-12 flex items-center justify-center border rounded text-xl mx-1 ${
-                          slot.isActive ? 'border-primary' : 'border-gray-300'
-                        }`}
+                        className={`w-10 h-12 flex items-center justify-center border rounded text-xl mx-1 ${slot.isActive ? 'border-primary' : 'border-gray-300'
+                          }`}
                       >
                         {slot.char ?? ""}
                       </div>

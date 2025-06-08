@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { OTPInput } from "@/components/ui/input-otp";
-import { apiClient, ConfirmEmailPayload } from "@/lib/api";
+import { ConfirmEmailPayload } from "@/types/auth";
+import { authApi } from "@/api/apiClient";
+
 import Image from "next/image";
 
 export default function VerifyPage() {
@@ -40,7 +42,7 @@ export default function VerifyPage() {
         token: code,
       };
 
-      const response = await apiClient.confirmEmail(payload);
+      const response = await authApi.confirmEmail(payload);
 
       if (response.error) {
         setError(response.message || response.error);
@@ -113,9 +115,8 @@ export default function VerifyPage() {
                     {slots.map((slot, idx) => (
                       <div
                         key={idx}
-                        className={`w-10 h-12 flex items-center justify-center border rounded text-xl mx-1 ${
-                          slot.isActive ? 'border-primary' : 'border-gray-300'
-                        }`}
+                        className={`w-10 h-12 flex items-center justify-center border rounded text-xl mx-1 ${slot.isActive ? 'border-primary' : 'border-gray-300'
+                          }`}
                       >
                         {slot.char ?? ""}
                       </div>
@@ -126,7 +127,7 @@ export default function VerifyPage() {
             </div>
             <p className="text-center text-sm text-gray-600">
               Didn't receive the code?{" "}
-              <button 
+              <button
                 type="button"
                 onClick={handleResendCode}
                 disabled={isResending}
