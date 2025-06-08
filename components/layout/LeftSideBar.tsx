@@ -2,16 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import {
-  MessageCircle,
-  Users,
-  Wallet,
-  Star,
-  Radio,
-  Bell,
-  Settings,
-  LucideIcon,
-} from 'lucide-react';
+import { MessageCircle, Users, Wallet, Star, Radio, Bell, Settings, DivideIcon as LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
