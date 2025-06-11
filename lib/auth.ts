@@ -1,4 +1,4 @@
-import { authApi, userApi } from '@/api/apiClient';
+import { authApi, userApi } from '@/services/api/apiClient';
 
 export interface AuthUser {
   id: string;

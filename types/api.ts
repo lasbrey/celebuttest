@@ -1,11 +1,3 @@
-// Base API Response Types
-export interface ApiResponse<T = any> {
-  data?: T;
-  error?: string;
-  message?: string;
-  status?: string;
-}
-
 // Pagination and Filtering Types
 export interface PaginationParams {
   cursor?: string;

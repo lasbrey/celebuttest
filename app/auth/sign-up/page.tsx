@@ -20,7 +20,7 @@ import {
   generateFCMToken
 } from "@/lib/auth";
 import { useRouter } from "next/navigation";
-import { authApi } from "@/api/apiClient";
+import { authApi } from "@/services/api/apiClient";
 
 export default function SignUpPage() {
   const router = useRouter();

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, Loader2 } from "lucide-react";
 import { ResetPasswordRequestPayload } from "@/types/auth";
-import { authApi } from "@/api/apiClient";
+import { authApi } from "@/services/api/apiClient";
 import { COUNTRY_CODES, formatPhoneNumber } from "@/lib/auth";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";

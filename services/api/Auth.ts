@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/types/apiResponse';
 import { UserSignupPayload, BusinessSignupPayload, LoginPayload, LoginResponse, ConfirmEmailPayload, ResetPasswordRequestPayload, ResetPasswordConfirmPayload } from '@/types/auth';
-import { BaseApiClient } from '@/api/baseApiClient';
+import { BaseApiClient } from '@/services/api/base';
 
 export class AuthApiClient extends BaseApiClient {
   async signupUser(payload: UserSignupPayload): Promise<ApiResponse> {

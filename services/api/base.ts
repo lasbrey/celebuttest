@@ -1,78 +1,65 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse } from '@/types/apiResponse';
+export class BaseApiClient {
+  protected baseURL: string;
 
-class BaseApiService {
-  protected api: AxiosInstance;
-
-  constructor(baseURL: string = 'https://staging-api.celebut.com/v1') {
-    this.api = axios.create({
-      baseURL,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    // Request interceptor to add auth token
-    this.api.interceptors.request.use(
-      (config) => {
-        const token = this.getAccessToken();
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
-    // Response interceptor for error handling
-    this.api.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        if (error.response?.status === 401) {
-          // Handle token refresh or redirect to login
-          await this.handleUnauthorized();
-        }
-        return Promise.reject(error);
-      }
-    );
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
   }
 
-  private getAccessToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('accessToken');
+  protected getAccessToken(): string | null {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("accessToken");
     }
     return null;
   }
 
-  private async handleUnauthorized(): Promise<void> {
-    // Clear tokens and redirect to login
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      window.location.href = '/';
+  protected setTokens(accessToken: string, refreshToken: string): void {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+  }
+
+  protected clearTokens(): void {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     }
   }
 
   protected async request<T>(
-    config: AxiosRequestConfig
+    endpoint: string,
+    options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<ApiResponse<T>> = await this.api(config);
-      return response.data;
-    } catch (error: any) {
-      console.error('API request failed:', error);
-      
-      if (error.response?.data) {
-        return error.response.data;
-      }
-      
-      return {
-        error: error.message || 'An unexpected error occurred',
-        message: 'Request failed',
-        status: 'error',
+    const url = `${this.baseURL}${endpoint}`;
+    const config: RequestInit = {
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    const token = this.getAccessToken();
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${token}`,
       };
+    }
+
+    try {
+      const response = await fetch(url, config);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Request failed");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("API request failed:", error);
+      throw error;
     }
   }
 }
-
-export default BaseApiService;

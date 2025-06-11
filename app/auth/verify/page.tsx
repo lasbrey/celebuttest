@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { OTPInput } from "@/components/ui/input-otp";
 import { ConfirmEmailPayload } from "@/types/auth";
-import { authApi } from "@/api/apiClient";
+import { authApi } from "@/services/api/apiClient";
 
 import Image from "next/image";
 

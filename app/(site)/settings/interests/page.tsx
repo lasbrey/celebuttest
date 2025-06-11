@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { settingsApi } from '@/api/apiClient';
+import { settingsApi } from '@/services/api/apiClient';
 import { useToast } from '@/hooks/use-toast';
 
 const interests = [

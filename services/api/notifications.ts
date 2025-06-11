@@ -1,44 +1,45 @@
-import BaseApiService from './base';
+import { BaseApiClient } from '@/services/api/base';
+import { ApiResponse } from '@/types/apiResponse';
 import { 
   Notification, 
   PaginationParams, 
-  ApiResponse,
   PaginatedResponse 
 } from '@/types/api';
 
-class NotificationsApiService extends BaseApiService {
+export class NotificationsApiClient extends BaseApiClient {
+  // Helper to build query string from params
+  private buildQueryParams(params?: PaginationParams): string {
+    if (!params) return '';
+    const query = new URLSearchParams(params as any).toString();
+    return query ? `?${query}` : '';
+  }
+
   // Get notifications with pagination and filtering
   async getNotifications(params?: PaginationParams): Promise<ApiResponse<PaginatedResponse<Notification>>> {
-    return this.request({
+    const query = this.buildQueryParams(params);
+    return this.request(`/notifications${query}`, {
       method: 'GET',
-      url: '/notifications',
-      params,
     });
   }
 
   // Get a single notification by ID
   async getNotification(id: string): Promise<ApiResponse<Notification>> {
-    return this.request({
+    return this.request(`/notifications/${id}`, {
       method: 'GET',
-      url: `/notifications/${id}`,
     });
   }
 
-  // Mark notification as read
+  // Mark a specific notification as read
   async markAsRead(id: string): Promise<ApiResponse<Notification>> {
-    return this.request({
+    return this.request(`/notifications/${id}/read`, {
       method: 'PATCH',
-      url: `/notifications/${id}/read`,
     });
   }
 
   // Mark all notifications as read
   async markAllAsRead(): Promise<ApiResponse<void>> {
-    return this.request({
+    return this.request(`/notifications/read-all`, {
       method: 'PATCH',
-      url: '/notifications/read-all',
     });
   }
 }
-
-export const notificationsApi = new NotificationsApiService();

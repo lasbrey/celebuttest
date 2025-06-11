@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
-import { settingsApi } from '@/api/apiClient';
+import { settingsApi } from '@/services/api/apiClient';
 
 export default function ChangePasswordPage() {
   const { toast } = useToast();

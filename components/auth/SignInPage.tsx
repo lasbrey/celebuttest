@@ -10,7 +10,7 @@ import { LoginPayload } from "@/types/auth";
 import { validateEmail, generateFCMToken } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/hooks/useAuth';
-import { authApi } from "@/api/apiClient";
+import { authApi } from "@/services/api/apiClient";
 
 
 export default function SignInPage() {

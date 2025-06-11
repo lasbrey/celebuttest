@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Link from 'next/link';
-import { settingsApi } from '@/api/apiClient';
+import { settingsApi } from '@/services/api/apiClient';
 import { useToast } from '@/hooks/use-toast';
 
 const languages = [

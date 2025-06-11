@@ -1,5 +1,5 @@
 import { ApiResponse } from '@/types/apiResponse';
-import { BaseApiClient } from '@/api/baseApiClient';
+import { BaseApiClient } from '@/services/api/base';
 import {
   LanguagePayload,
   NotificationPreferencesPayload,

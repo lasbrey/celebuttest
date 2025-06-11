@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
-import { settingsApi } from '@/api/apiClient';
+import { settingsApi } from '@/services/api/apiClient';
 import { Switch } from '@/components/ui/switch'; // your radix switch import
 
 export default function NotificationsSettingsPage() {
