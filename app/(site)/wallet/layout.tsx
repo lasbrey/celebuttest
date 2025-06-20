@@ -14,11 +14,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-[#f2f4f7]">
+        <div className="min-h-screen bg-[#f2f4f7] px-4 py-8">
             <div className="">
                 {/* Header */}
                 {/* <Header /> */}
-                <div className="px-8">
+                <div className="">
                     <div className="grid grid-cols-3 gap-6">
                         <div className="col-span-1">
                             <Sidebar />

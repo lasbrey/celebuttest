@@ -10,8 +10,10 @@ import { authApi } from "@/services/api/apiClient";
 import { validatePassword } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ResetPasswordPage() {
+  const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [code, setCode] = useState("");
@@ -21,13 +23,13 @@ export default function ResetPasswordPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
-    const phoneParam = searchParams.get('phone');
-    if (phoneParam) {
-      setPhoneNumber(decodeURIComponent(phoneParam));
+    const emailParam = searchParams.get("email");
+    if (emailParam) {
+      setEmail(decodeURIComponent(emailParam));
     }
   }, [searchParams]);
 
@@ -36,9 +38,9 @@ export default function ResetPasswordPage() {
     setPasswordStrength(validation.strength);
 
     if (password && !validation.isValid) {
-      setErrors(prev => ({ ...prev, password: validation.errors[0] }));
+      setErrors((prev) => ({ ...prev, password: validation.errors[0] }));
     } else {
-      setErrors(prev => ({ ...prev, password: '' }));
+      setErrors((prev) => ({ ...prev, password: "" }));
     }
   };
 
@@ -47,9 +49,8 @@ export default function ResetPasswordPage() {
     setPassword(newPassword);
     checkPasswordStrength(newPassword);
 
-    // Clear confirm password error if passwords now match
     if (confirmPassword && newPassword === confirmPassword) {
-      setErrors(prev => ({ ...prev, confirmPassword: '' }));
+      setErrors((prev) => ({ ...prev, confirmPassword: "" }));
     }
   };
 
@@ -57,11 +58,10 @@ export default function ResetPasswordPage() {
     const newConfirmPassword = e.target.value;
     setConfirmPassword(newConfirmPassword);
 
-    // Check if passwords match
     if (password && newConfirmPassword !== password) {
-      setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+      setErrors((prev) => ({ ...prev, confirmPassword: "Passwords do not match" }));
     } else {
-      setErrors(prev => ({ ...prev, confirmPassword: '' }));
+      setErrors((prev) => ({ ...prev, confirmPassword: "" }));
     }
   };
 
@@ -71,15 +71,14 @@ export default function ResetPasswordPage() {
     setErrors({});
 
     try {
-      // Validate form
       const newErrors: Record<string, string> = {};
 
       if (code.length !== 6) {
-        newErrors.code = 'Please enter a valid 6-digit code';
+        newErrors.code = "Please enter a valid 6-digit code";
       }
 
       if (!password) {
-        newErrors.password = 'Password is required';
+        newErrors.password = "Password is required";
       } else {
         const validation = validatePassword(password);
         if (!validation.isValid) {
@@ -88,13 +87,13 @@ export default function ResetPasswordPage() {
       }
 
       if (!confirmPassword) {
-        newErrors.confirmPassword = 'Please confirm your password';
+        newErrors.confirmPassword = "Please confirm your password";
       } else if (password !== confirmPassword) {
-        newErrors.confirmPassword = 'Passwords do not match';
+        newErrors.confirmPassword = "Passwords do not match";
       }
 
-      if (!phoneNumber) {
-        newErrors.general = 'Phone number is required';
+      if (!email) {
+        newErrors.general = "Email is required";
       }
 
       if (Object.keys(newErrors).length > 0) {
@@ -105,7 +104,7 @@ export default function ResetPasswordPage() {
 
       const payload: ResetPasswordConfirmPayload = {
         password: password,
-        phone_number: phoneNumber,
+        email: email,
         token: code,
       };
 
@@ -113,12 +112,23 @@ export default function ResetPasswordPage() {
 
       if (response.error) {
         setErrors({ general: response.message || response.error });
+        toast({
+          title: "Error Sending Verification Code",
+          description: response.message || response.error,
+          variant: "destructive",
+        });
       } else {
-        // Password reset successful - redirect to login
-        router.push('/?reset=true');
+        toast({
+          title: "Password Reset Successful",
+          description: "Your password has been reset successfully. You can now log in.",
+          variant: "success",
+        });
+        router.push("/?reset=true");
       }
     } catch (error: any) {
-      setErrors({ general: error.message || 'An error occurred while resetting password' });
+      setErrors({
+        general: error.message || "An error occurred while resetting password",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +137,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center mb-6">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-pink-500 to-primary text-transparent bg-clip-text mb-2">
             <Image src="/logo.png" width={150} height={32} alt="Logo" />
           </h1>
@@ -148,7 +158,7 @@ export default function ResetPasswordPage() {
             <label className="block text-sm font-medium text-gray-700">
               Verification Code
             </label>
-            <div className="flex justify-center">
+            <div className="">
               <OTPInput
                 value={code}
                 onChange={setCode}

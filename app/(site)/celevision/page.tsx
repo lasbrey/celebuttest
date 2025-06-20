@@ -108,7 +108,7 @@ const streams = [
 export default function CelevisionPage() {
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4 py-8 ">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-semibold">Celevision</h1>
           <Link

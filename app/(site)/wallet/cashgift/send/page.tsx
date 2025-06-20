@@ -5,20 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const portfolio = [
-  { name: "Cash Gift", amount: 5500, color: "bg-purple-100", textColor: "text-purple-600", icon: "🎁" },
-  { name: "Take me out", amount: 2050.45, color: "bg-red-100", textColor: "text-red-600", icon: "🍽️" },
-  { name: "Drink", amount: 2000, color: "bg-primary", textColor: "text-primary", icon: "🥤" },
-  { name: "Gift Card", amount: 600, color: "bg-green-100", textColor: "text-green-600", icon: "🎫" },
-  { name: "Wishlist", amount: 3250, color: "bg-indigo-100", textColor: "text-indigo-600", icon: "🎯" },
-  { name: "Celevision/Subscription Fee", amount: 310, color: "bg-indigo-100", textColor: "text-indigo-600", icon: "📺" },
-  { name: "Celebration Revenue", amount: 310, color: "bg-indigo-100", textColor: "text-indigo-600", icon: "🎉" },
-  { name: "Retail Coupons", amount: 310, color: "bg-indigo-100", textColor: "text-indigo-600", icon: "🏷️" },
-];
-
 export default function SendMoneyPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className="p-8">
 

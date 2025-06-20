@@ -20,7 +20,7 @@ export interface BusinessSignupPayload {
 
 export interface LoginPayload {
   email: string;
-  fcm_token: string;
+  // fcm_token: string;
   password: string;
 }
 
@@ -40,11 +40,19 @@ export interface RefreshTokenPayload {
 }
 
 export interface ResetPasswordRequestPayload {
-  phone_number: string;
+  email: string;
 }
 
 export interface ResetPasswordConfirmPayload {
   password: string;
-  phone_number: string;
+  email: string;
   token: string;
+}
+
+export interface BlockedUser {
+  id: string;
+  user_id: string;
+  blocked_user_id: string;
+  blocked_at: string;
+  reason?: string;
 }

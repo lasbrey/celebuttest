@@ -14,9 +14,9 @@ const transactions = [
 export default function WalletPage() {
     return (
         <>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
                 {/* Add Income Card */}
-                <div className="bg-white rounded-xl p-7">
+                <div className="bg-white rounded-xl p-2">
                     <div className="flex items-center space-x-3 mb-2">
                         <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                             <Plus className="h-5 w-5 text-green-600" />
@@ -29,14 +29,26 @@ export default function WalletPage() {
                 </div>
 
                 {/* Transfer Money Card */}
-                <div className="bg-white rounded-xl p-7">
+                <div className="bg-white rounded-xl p-2">
                     <div className="flex items-center space-x-3 mb-2">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <ArrowLeftRight className="h-5 w-5 text-primary" />
+                            <ArrowLeftRight className="h-6 w-6 px-1 text-white" />
                         </div>
                         <div>
                             <h2 className="font-medium">Transfer money</h2>
                             <p className="text-sm text-gray-500">Select the amount and make a transfer</p>
+                        </div>
+                    </div>
+                </div>
+                 {/* Withdraw Money Card */}
+                <div className="bg-white rounded-xl p-2">
+                    <div className="flex items-center space-x-3 mb-2">
+                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <ArrowLeftRight className="h-6 w-6 px-1 text-white" />
+                        </div>
+                        <div>
+                            <h2 className="font-medium">Withdraw money</h2>
+                            <p className="text-sm text-gray-500">Select the amount and make a Withdraw</p>
                         </div>
                     </div>
                 </div>

@@ -7,11 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoginPayload } from "@/types/auth";
-import { validateEmail, generateFCMToken } from "@/lib/auth";
+import { validateEmail } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/hooks/useAuth';
 import { authApi } from "@/services/api/apiClient";
-
 
 export default function SignInPage() {
   const router = useRouter();
@@ -68,7 +67,6 @@ export default function SignInPage() {
       const payload: LoginPayload = {
         email: formData.email,
         password: formData.password,
-        fcm_token: generateFCMToken(),
       };
 
       const response = await authApi.login(payload);

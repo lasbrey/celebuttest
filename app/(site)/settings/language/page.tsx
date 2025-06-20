@@ -57,6 +57,7 @@ export default function LanguagePage() {
       toast({
         title: 'Language Updated',
         description: `Language set to ${languages.find(l => l.code === tempSelectedLanguage)?.name}`,
+        variant: 'success',
       });
     } catch (error) {
       toast({

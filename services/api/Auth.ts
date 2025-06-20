@@ -1,6 +1,14 @@
-import { ApiResponse } from '@/types/apiResponse';
-import { UserSignupPayload, BusinessSignupPayload, LoginPayload, LoginResponse, ConfirmEmailPayload, ResetPasswordRequestPayload, ResetPasswordConfirmPayload } from '@/types/auth';
-import { BaseApiClient } from '@/services/api/base';
+import { ApiResponse } from "@/types/apiResponse";
+import {
+  UserSignupPayload,
+  BusinessSignupPayload,
+  LoginPayload,
+  LoginResponse,
+  ConfirmEmailPayload,
+  ResetPasswordRequestPayload,
+  ResetPasswordConfirmPayload,
+} from "@/types/auth";
+import { BaseApiClient } from "@/services/api/base";
 
 export class AuthApiClient extends BaseApiClient {
   async signupUser(payload: UserSignupPayload): Promise<ApiResponse> {
@@ -35,7 +43,7 @@ export class AuthApiClient extends BaseApiClient {
       method: "GET",
     });
   }
-  
+
   async confirmEmail(payload: ConfirmEmailPayload): Promise<ApiResponse> {
     return this.request("/auth/confirm-email", {
       method: "PATCH",
@@ -43,16 +51,26 @@ export class AuthApiClient extends BaseApiClient {
     });
   }
 
-  async requestPasswordReset(payload: ResetPasswordRequestPayload): Promise<ApiResponse> {
-    return this.request("/auth/resetpassword", {
+  async requestPasswordReset(
+    payload: ResetPasswordRequestPayload
+  ): Promise<ApiResponse> {
+    return this.request("/auth/reset-password", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(payload),
     });
   }
 
-  async confirmPasswordReset(payload: ResetPasswordConfirmPayload): Promise<ApiResponse> {
-    return this.request("/auth/resetpassword", {
+  async confirmPasswordReset(
+    payload: ResetPasswordConfirmPayload
+  ): Promise<ApiResponse> {
+    return this.request("/auth/reset-password", {
       method: "PATCH",
+         headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(payload),
     });
   }
@@ -82,10 +100,11 @@ export class AuthApiClient extends BaseApiClient {
   async logout(): Promise<ApiResponse> {
     this.clearTokens();
 
-    const response = await this.request("/settings/logout", {
-      method: "PUT",
-    });
-    return response;
+    return {
+      data: null,
+      status: "ok",
+      message: "Logged out locally",
+    };
   }
 
   isAuthenticated(): boolean {

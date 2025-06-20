@@ -17,7 +17,6 @@ import {
   validateUsername,
   formatPhoneNumber,
   formatDateForAPI,
-  generateFCMToken
 } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { authApi } from "@/services/api/apiClient";

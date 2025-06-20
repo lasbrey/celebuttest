@@ -167,11 +167,11 @@ export const validateUsername = (username: string): {
 };
 
 // Generate FCM token (placeholder - implement based on your FCM setup)
-export const generateFCMToken = (): string => {
-  // In a real app, this would generate an actual FCM token
-  // For now, return a placeholder
-  return 'fcm_token_placeholder';
-};
+// export const generateFCMToken = (): string => {
+//   // In a real app, this would generate an actual FCM token
+//   // For now, return a placeholder
+//   return 'fcm_token_placeholder';
+// };
 
 // Format date for API (YYYY-MM-DD)
 export const formatDateForAPI = (date: string): string => {

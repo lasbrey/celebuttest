@@ -1,5 +1,5 @@
-import { BaseApiClient } from '@/services/api/base';
 import { ApiResponse } from '@/types/apiResponse';
+import { BaseApiClient } from '@/services/api/base';
 
 export class UserApiClient extends BaseApiClient {
   async getSelf(): Promise<ApiResponse> {

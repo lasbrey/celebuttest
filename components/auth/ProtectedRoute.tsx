@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import Image from "next/image";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -23,8 +24,7 @@ export default function ProtectedRoute({ children, fallback }: ProtectedRoutePro
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <Image src="/logo.png" width={150} height={100} alt="Logo" />
         </div>
       </div>
     );

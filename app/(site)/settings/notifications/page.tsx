@@ -5,11 +5,10 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 import { settingsApi } from '@/services/api/apiClient';
-import { Switch } from '@/components/ui/switch'; // your radix switch import
+import { Switch } from '@/components/ui/switch'; 
 
 export default function NotificationsSettingsPage() {
     const { toast } = useToast();
-
     // States for notification toggles (default false)
     const [commentNotif, setCommentNotif] = useState(false);
     const [dmNotif, setDmNotif] = useState(false);
@@ -19,10 +18,8 @@ export default function NotificationsSettingsPage() {
     const [pushNotif, setPushNotif] = useState(false);
     const [repostNotif, setRepostNotif] = useState(false);
     const [tagsMentionNotif, setTagsMentionNotif] = useState(false);
-
     const [loading, setLoading] = useState(false);
 
-    // Helper function to handle toggling with API calls
     const handleToggle = async (
         currentValue: boolean,
         toggleApiCall: () => Promise<any>,
@@ -35,7 +32,8 @@ export default function NotificationsSettingsPage() {
             await toggleApiCall();
             setState(!currentValue);
             toast({ title: successMessage });
-        } catch {
+        } catch (error) {
+            console.log(error);
             toast({ title: errorMessage, variant: 'destructive' });
         } finally {
             setLoading(false);
@@ -58,7 +56,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 commentNotif,
-                                settingsApi.toggleCommentNotification,
+                                () => settingsApi.toggleCommentNotification(),
                                 setCommentNotif,
                                 'Comment notifications toggled',
                                 'Failed to toggle comment notifications'
@@ -70,7 +68,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 dmNotif,
-                                settingsApi.toggleDirectMessageNotification,
+                                () => settingsApi.toggleDirectMessageNotification(),
                                 setDmNotif,
                                 'Direct message notifications toggled',
                                 'Failed to toggle direct message notifications'
@@ -82,7 +80,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 likesNotif,
-                                settingsApi.toggleLikesNotification,
+                                () => settingsApi.toggleLikesNotification(),
                                 setLikesNotif,
                                 'Likes notifications toggled',
                                 'Failed to toggle likes notifications'
@@ -94,7 +92,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 liveNotif,
-                                settingsApi.toggleLiveNotification,
+                                () => settingsApi.toggleLiveNotification(),
                                 setLiveNotif,
                                 'Live notifications toggled',
                                 'Failed to toggle live notifications'
@@ -106,7 +104,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 newFollowerNotif,
-                                settingsApi.toggleNewFollowerNotification,
+                                () => settingsApi.toggleNewFollowerNotification(),
                                 setNewFollowerNotif,
                                 'New follower notifications toggled',
                                 'Failed to toggle new follower notifications'
@@ -118,7 +116,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 pushNotif,
-                                settingsApi.togglePushNotification,
+                                () => settingsApi.togglePushNotification(),
                                 setPushNotif,
                                 'Push notifications toggled',
                                 'Failed to toggle push notifications'
@@ -130,7 +128,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 repostNotif,
-                                settingsApi.toggleRepostNotification,
+                                () => settingsApi.toggleRepostNotification(),
                                 setRepostNotif,
                                 'Repost notifications toggled',
                                 'Failed to toggle repost notifications'
@@ -142,7 +140,7 @@ export default function NotificationsSettingsPage() {
                         toggle: () =>
                             handleToggle(
                                 tagsMentionNotif,
-                                settingsApi.toggleTagsAndMentionNotification,
+                                () => settingsApi.toggleTagsAndMentionNotification(),
                                 setTagsMentionNotif,
                                 'Tags & mention notifications toggled',
                                 'Failed to toggle tags & mention notifications'

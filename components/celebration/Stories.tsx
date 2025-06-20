@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import Link from "next/link";
 
 interface Story {
   id: number;
@@ -64,19 +65,19 @@ const Stories: React.FC = () => {
       <div
         ref={scrollRef}
         onScroll={checkScrollPosition}
-        className="flex space-x-4 overflow-x-auto pb-4 no-scrollbar scroll-smooth w-full"
+        className="flex space-x-4 overflow-x-auto no-scrollbar scroll-smooth w-full"
       >
         {/* First Card - Create Story */}
-        <div className="flex-shrink-0 relative cursor-pointer transition-transform transform hover:scale-105">
-          <div className="w-28 h-40 rounded-2xl overflow-hidden bg-gray-200 flex flex-col items-center justify-center border-2 border-dashed border-primary">
-            <Plus size={32} className="text-primary" />
-            <span className="text-sm font-semibold text-gray-600 mt-2 text-center">Your Celebration</span>
-          </div>
-        </div>
+        <Link href="/celebrations/createcelebration" className="flex-shrink-0 relative cursor-pointer transition-transform transform hover:scale-90">
+            <div className="w-28 h-40 rounded-2xl overflow-hidden bg-gray-200 flex flex-col items-center justify-center border-2 border-dashed border-primary">
+              <Plus size={32} className="text-primary" />
+              <span className="text-sm font-semibold text-gray-600 mt-2 text-center">Your Celebration</span>
+            </div>
+        </Link>
 
         {/* Other Stories */}
         {storyData.map((story) => (
-          <div key={story.id} className="flex-shrink-0 relative cursor-pointer transition-transform transform hover:scale-105">
+          <div key={story.id} className="flex-shrink-0 relative cursor-pointer transition-transform transform hover:scale-90">
             <div className="w-28 h-40 rounded-2xl overflow-hidden">
               <img src={story.img} alt={story.name} className="w-full h-full object-cover" />
             </div>

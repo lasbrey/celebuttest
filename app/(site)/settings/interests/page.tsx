@@ -76,6 +76,7 @@ export default function InterestsPage() {
       toast({
         title: 'Success',
         description: 'Your areas of interest have been saved.',
+        variant: 'success',
       });
     } catch (error) {
       toast({

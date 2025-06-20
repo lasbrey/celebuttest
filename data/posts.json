@@ -1,0 +1,108 @@
+[
+  {
+    "id": 1,
+    "author": {
+      "name": "Jane Cooper",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
+    },
+    "timestamp": "4h ago",
+    "content": "Habitant morbi tristique senectus et netus et. Suspendisse sed nisi lacus sed viverra. Dolor morbi non arcu risus quis varius. #amazing #great #lifetime #uiux #machinelearning",
+    "media": [],
+    "comments": [
+      {
+        "id": 1,
+        "author": {
+          "name": "Stephen",
+          "avatar": "https://i.pravatar.cc/32?img=12"
+        },
+        "text": "This is dope!",
+        "timestamp": "2h ago"
+      },
+      {
+        "id": 2,
+        "author": {
+          "name": "Micheal",
+          "avatar": "https://i.pravatar.cc/32?img=1"
+        },
+        "text": "I know it is dope!",
+        "timestamp": "1m ago"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "author": {
+      "name": "Cameron Williamson",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
+    },
+    "timestamp": "23 Aug at 4:21 PM",
+    "content": "Here are some designs I’ve been working on!",
+    "media": [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "author": {
+          "name": "Lazarus",
+          "avatar": "https://i.pravatar.cc/32?img=12"
+        },
+        "text": "This is dope!",
+        "timestamp": "2h ago"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "author": {
+      "name": "Jason Samson",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
+    },
+    "timestamp": "23 Aug at 4:21 PM",
+    "content": "Here are some designs I’ve been working on!",
+    "media": [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "author": {
+          "name": "Lazarus",
+          "avatar": "https://i.pravatar.cc/32?img=12"
+        },
+        "text": "This is dope!",
+        "timestamp": "2h ago"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "author": {
+      "name": "Jane Cooper",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=48&h=48&q=80"
+    },
+    "timestamp": "4h ago",
+    "content": "Habitant morbi tristique senectus et netus et. Suspendisse sed nisi lacus sed viverra. Dolor morbi non arcu risus quis varius. #amazing #great #lifetime #uiux #machinelearning",
+    "media": [],
+    "comments": [
+      {
+        "id": 1,
+        "author": {
+          "name": "Stephen",
+          "avatar": "https://i.pravatar.cc/32?img=12"
+        },
+        "text": "This is dope!",
+        "timestamp": "2h ago"
+      },
+      {
+        "id": 2,
+        "author": {
+          "name": "Micheal",
+          "avatar": "https://i.pravatar.cc/32?img=1"
+        },
+        "text": "I know it is dope!",
+        "timestamp": "1m ago"
+      }
+    ]
+  }
+]

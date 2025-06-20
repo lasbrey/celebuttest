@@ -1,16 +1,45 @@
 "use client";
 
-import { NotificationsList } from "@/components/notifications/NotificationsList";
-import { useMarkAllAsRead, useUnreadNotificationsCount } from "@/hooks/useNotifications";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Check, MoreHorizontal } from "lucide-react";
+import { notificationsApi } from "@/services/api";
+import {
+  Notification,
+} from '@/types/notifications';
+import { PaginatedQuery } from '@/types/comon';
+import { ApiResponse } from "@/types/apiResponse";
 
 export default function NotificationsPage() {
-  const { data: unreadCount } = useUnreadNotificationsCount();
-  const markAllAsReadMutation = useMarkAllAsRead();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
-  const handleMarkAllAsRead = () => {
-    markAllAsReadMutation.mutate();
-  };
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const payload: PaginatedQuery = {
+          limit: 10,
+          page: 1,
+        };
+
+        const res: ApiResponse<Notification[]> = await notificationsApi.getNotifications(payload);
+
+        if (res.data) {
+          setNotifications(res.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch notifications:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  if (loading) {
+    return <div className="p-4 text-center text-sm text-gray-500">Loading notifications...</div>;
+  }
 
   return (
     <div className="min-h-screen">
@@ -18,27 +47,65 @@ export default function NotificationsPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-semibold">Notifications</h1>
-            {unreadCount && unreadCount > 0 && (
-              <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                {unreadCount}
-              </span>
-            )}
+            <span className="text-sm text-gray-500">({filter})</span>
           </div>
-          {unreadCount && unreadCount > 0 && (
-            <Button
-              onClick={handleMarkAllAsRead}
-              disabled={markAllAsReadMutation.isPending}
-              variant="outline"
-              size="sm"
-            >
-              Mark all as read
-            </Button>
+          <button className="text-primary text-sm font-medium">
+            Mark all as read
+          </button>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm">
+          {notifications.length === 0 ? (
+            <div className="p-6 text-center text-gray-500 text-sm">
+              No notifications found.
+            </div>
+          ) : (
+            <div className="divide-y">
+              {notifications.map((notification) => (
+                <div key={notification.id} className="p-4 hover:bg-gray-50">
+                  <div className="flex items-start space-x-4">
+                    <img
+                      src={notification.user.avatar}
+                      alt={notification.user.name}
+                      className="w-10 h-10 rounded-md"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm">
+                          <span className="font-medium">{notification.user.name}</span>{" "}
+                          {notification.action}{" "}
+                          <span className="font-medium">{notification.target}</span>
+                        </p>
+                        <div className="flex items-center space-x-2">
+                          {notification.status === "pending" && (
+                            <div className="flex space-x-2">
+                              <button className="px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary">
+                                Approve
+                              </button>
+                              <button className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200">
+                                Decline
+                              </button>
+                            </div>
+                          )}
+                          <button className="text-gray-400 hover:text-gray-600">
+                            <MoreHorizontal className="h-5 w-5" />
+                          </button>
+                        </div>
+                      </div>
+                      {notification.comment && (
+                        <p className="mt-1 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                          {notification.comment}
+                        </p>
+                      )}
+                      <p className="mt-1 text-sm text-gray-500">{notification.time}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <NotificationsList />
-        </div>
       </div>
     </div>
   );

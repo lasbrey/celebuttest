@@ -1,4 +1,5 @@
 "use client";
+
 import { Share2, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
@@ -10,48 +11,62 @@ const ProfileHeader = () => {
   if (!user) {
     return (
       <div className="relative -mt-24 mb-8 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
       </div>
     );
   }
 
+  const isBusiness = user.account_type === "business";
+
   return (
-    <div className="relative -mt-24 mb-8 flex justify-between items-end">
-      <div className="flex items-end">
+    <div className="relative -mt-24 mb-8 bg-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      {/* Left: Profile Info */}
+      <div className="flex items-start md:items-end gap-6">
         <div className="relative">
           <img
             src={getUserAvatar(user)}
             alt="Profile"
-            className="w-48 h-48 rounded-2xl border-4 border-white shadow-lg object-cover"
+            className="w-36 h-36 md:w-38 md:h-38 rounded-2xl border-4 border-white shadow object-cover"
           />
         </div>
-        <div className="ml-6 mb-6">
-          <h1 className="text-3xl font-bold">{getUserDisplayName(user)}</h1>
-          <p className="text-gray-600">@{user.username}</p>
-          {user.email && (
-            <p className="text-gray-600">{user.email}</p>
+
+        <div className="space-y-1">
+          <h1 className="text-2xl md:text-3xl font-bold">{getUserDisplayName(user)}</h1>
+          {user.email && <p className="text-gray-500 text-sm">{user.email}</p>}
+          {isBusiness && user.industry && (
+            <p className="text-gray-500 text-sm capitalize">{user.industry}</p>
           )}
-          {user.account_type === 'business' && user.industry && (
-            <p className="text-gray-600 capitalize">{user.industry}</p>
-          )}
-          <p className="mt-2 text-gray-600 max-w-xl">
-            {user.account_type === 'business' 
+
+          <p className="mt-3 text-gray-600 text-sm md:text-base max-w-xl">
+            {isBusiness
               ? `Welcome to ${user.business_name || user.username}! We're here to help you celebrate life's special moments.`
-              : "Hi there! 👋 I'm here to celebrate life's amazing moments with friends and family."
-            }
+              : "Hi there! 👋 I'm here to celebrate life's amazing moments with friends and family."}
           </p>
         </div>
       </div>
-      <div className="flex space-x-3">
-        <button className="bg-white text-primary px-6 py-2 rounded-lg border hover:bg-gray-50">
+
+      {/* Right: Actions */}
+      <div className="flex gap-2 md:gap-3 mt-2 md:mt-0 self-end md:self-auto">
+        {/* <button
+          title="Share Profile"
+          className="bg-gray-100 text-primary p-2 rounded-lg border hover:bg-gray-200"
+        >
           <Share2 className="h-5 w-5" />
-        </button>
-        <Link href="/profile/edit" className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary">
-         Edit Profile
+        </button> */}
+
+        <Link
+          href="/profile/edit"
+          className="bg-primary text-white px-4 md:px-6 py-2 rounded-lg hover:bg-primary/90 text-sm font-medium"
+        >
+          Edit Profile
         </Link>
-        <button className="bg-white text-gray-600 px-3 py-2 rounded-lg border hover:bg-gray-50">
+
+        {/* <button
+          title="More"
+          className="bg-gray-100 text-gray-600 p-2 rounded-lg border hover:bg-gray-200"
+        >
           <MoreHorizontal className="h-5 w-5" />
-        </button>
+        </button> */}
       </div>
     </div>
   );

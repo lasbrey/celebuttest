@@ -4,15 +4,16 @@ import FriendsSection from "@/components/profile/FriendsSection";
 import CelebrationSection from "@/components/profile/CelebrationSection";
 import TabsSection from "@/components/profile/TabsSection";
 
+
 const ProfilePage = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 rounded-sm px-4 py-8">
       {/* Cover Image */}
-      <div className="h-80 bg-gradient-to-r from-amber-100 to-orange-100 relative">
+      <div className="h-80 bg-gradient-to-r from-amber-100 to-orange-100 relative rounded-md">
         <img
           src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=1600&q=80"
           alt="Cover"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-t-xl"
         />
       </div>
 

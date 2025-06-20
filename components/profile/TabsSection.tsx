@@ -14,7 +14,7 @@ const TabsSection = () => {
           value="celebrated"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
         >
-          Celebrated
+          Celebrations
         </TabsTrigger>
         <TabsTrigger
           value="business"
@@ -23,8 +23,15 @@ const TabsSection = () => {
           Business
         </TabsTrigger>
       </TabsList>
+
       <TabsContent value="contents">
-        {/* Contents content goes here */}
+        <p className="text-sm text-gray-500 py-6">No content available.</p>
+      </TabsContent>
+      <TabsContent value="celebrated">
+        <p className="text-sm text-gray-500 py-6">No celebration content available.</p>
+      </TabsContent>
+      <TabsContent value="business">
+        <p className="text-sm text-gray-500 py-6">No followed business available.</p>
       </TabsContent>
     </Tabs>
   );

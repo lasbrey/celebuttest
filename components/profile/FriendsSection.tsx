@@ -1,21 +1,40 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
-
-const friends = [
-  {
-    name: "Julia Smith",
-    username: "@juliasmith",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&q=80",
-  },
-  {
-    name: "Vermillion D. Gray",
-    username: "@vermilliongray",
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&q=80",
-  },
-  // More friends here...
-];
+import FriendCard from "@/components/other/FriendCard";
+import { followersApi } from "@/services/api";
+import { User } from "@/types/user";
 
 const FriendsSection = () => {
+  const [friends, setFriends] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await followersApi.getFriends({ page: 1, limit: 6 });
+        if (response?.data) {
+          setFriends(
+            response.data.map((follower: any) => ({
+              id: follower.id,
+              name: follower.name ?? follower.username,
+              username: follower.username,
+              avatar: follower.avatar,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Failed to fetch friends:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFriends();
+  }, []);
+
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
@@ -24,26 +43,26 @@ const FriendsSection = () => {
           See All
         </Link>
       </div>
-      <div className="space-y-4">
-        {friends.map((friend, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <img
-                src={friend.avatar}
-                alt={friend.name}
-                className="w-10 h-10 rounded-md"
-              />
-              <div>
-                <h4 className="font-medium">{friend.name}</h4>
-                <p className="text-sm text-gray-500">{friend.username}</p>
-              </div>
-            </div>
-            <button className="text-primary">
-              <MoreHorizontal className="h-5 w-5" />
-            </button>
-          </div>
-        ))}
-      </div>
+
+      {loading ? (
+        <p className="text-sm text-gray-500">Loading...</p>
+      ) : friends.length === 0 ? (
+        <p className="text-sm text-gray-500">You have no friends yet.</p>
+      ) : (
+        <div className="space-y-4">
+          {friends.map((friend) => (
+            <FriendCard
+              key={friend.id}
+              friend={friend}
+              rightAction={
+                <button className="text-primary hover:text-primary/80">
+                  <MoreHorizontal className="h-5 w-5" />
+                </button>
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

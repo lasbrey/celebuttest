@@ -48,7 +48,7 @@ const AboutSection = () => {
         {user.date_of_birth && (
           <div className="flex items-center space-x-2 text-gray-600">
             <Calendar className="h-5 w-5" />
-            <span>Born {new Date(user.date_of_birth).toLocaleDateString()}</span>
+            <span>{new Date(user.date_of_birth).toLocaleDateString()}</span>
           </div>
         )}
 

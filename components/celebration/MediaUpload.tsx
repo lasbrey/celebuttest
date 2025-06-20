@@ -17,7 +17,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onBack }) => {
     return (
         <div className="">
             {/* Media Upload Section */}
-            {/* {uploadProgress > 0 && (
+            {uploadProgress > 0 && (
                 <div className="mt-4 space-y-4 bg-white rounded-xl p-6 shadow-sm mb-5">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
@@ -35,7 +35,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onBack }) => {
                     </div>
                     <Progress value={uploadProgress} className="h-2" />
                 </div>
-            )} */}
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <div className="bg-white rounded-2xl p-6 shadow-sm">

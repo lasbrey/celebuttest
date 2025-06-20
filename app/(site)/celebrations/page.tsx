@@ -8,7 +8,7 @@ import celebrations from "@/data/celebration.json";
 export default function CelebrationsPage() {
 
   return (
-    <div>
+    <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-semibold">Celebrations</h1>
         <Link
@@ -21,7 +21,7 @@ export default function CelebrationsPage() {
 
       <Stories />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1 pt-5">
         {celebrations.map((celebration) => (
           <Link
             key={celebration.id}

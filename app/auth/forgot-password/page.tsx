@@ -2,22 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, Loader2 } from "lucide-react";
+import { Mail, Loader2 } from "lucide-react";
 import { ResetPasswordRequestPayload } from "@/types/auth";
 import { authApi } from "@/services/api/apiClient";
-import { COUNTRY_CODES, formatPhoneNumber } from "@/lib/auth";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ForgotPasswordPage() {
+  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [selectedCountryCode, setSelectedCountryCode] = useState('+1');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,21 +23,20 @@ export default function ForgotPasswordPage() {
     setError("");
 
     try {
-      if (!phoneNumber.trim()) {
-        setError("Phone number is required");
+      if (!email.trim()) {
+        setError("Email is required");
         setIsLoading(false);
         return;
       }
 
-      if (phoneNumber.replace(/\D/g, '').length < 10) {
-        setError("Please enter a valid phone number");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError("Please enter a valid email address");
         setIsLoading(false);
         return;
       }
 
-      const formatted = formatPhoneNumber(selectedCountryCode, phoneNumber);
       const payload: ResetPasswordRequestPayload = {
-        phone_number: formatted.formattedNumber || "",
+        email,
       };
 
       const response = await authApi.requestPasswordReset(payload);
@@ -47,53 +44,38 @@ export default function ForgotPasswordPage() {
       if (response.error) {
         setError(response.message || response.error);
       } else {
-        setSuccess(true);
-        // Redirect to reset confirmation page
+        toast({
+          title: "Verification Code Sent",
+          description: "Please check your email for the verification code.",
+          variant: "success",
+        });
         setTimeout(() => {
-          router.push(`/auth/reset-password?phone=${encodeURIComponent(payload.phone_number)}`);
+          router.push(`/auth/reset-password?email=${encodeURIComponent(payload.email)}`);
         }, 2000);
       }
     } catch (error: any) {
+      toast({
+          title: "Verification Code Sent",
+          description: error?.message || 'An error occurred while requesting password reset',
+          variant: "destructive",
+        });
       setError(error.message || 'An error occurred while requesting password reset');
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (success) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-        <div className="w-full max-w-md space-y-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-pink-500 to-primary text-transparent bg-clip-text mb-2">
-              <Image src="/logo.png\" width={150} height={32} alt="Logo" />
-            </h1>
-            <h2 className="text-2xl font-semibold text-gray-900">Code Sent!</h2>
-            <p className="mt-2 text-gray-600">
-              We've sent a verification code to your phone number. You'll be redirected to enter the code shortly.
-            </p>
-          </div>
-          
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-            <p className="text-green-600 text-sm text-center">
-              Verification code sent successfully!
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-pink-500 to-primary text-transparent bg-clip-text mb-2">
             <Image src="/logo.png" width={150} height={32} alt="Logo" />
           </h1>
           <h2 className="text-2xl font-semibold text-gray-900">Forgot Password?</h2>
           <p className="mt-2 text-gray-600">
-            Enter your phone number and we'll send you a verification code
+            Enter your email and we'll send you a verification code
           </p>
         </div>
 
@@ -105,37 +87,23 @@ export default function ForgotPasswordPage() {
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-              Phone Number
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email Address
             </label>
-            <div className="mt-1 flex">
-              <Select value={selectedCountryCode} onValueChange={setSelectedCountryCode}>
-                <SelectTrigger className="w-24">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {COUNTRY_CODES.map((country) => (
-                    <SelectItem key={country.code} value={country.code}>
-                      {country.flag} {country.code}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="flex-1 relative ml-2">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
-                  placeholder="Enter Phone Number"
-                />
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-gray-400" />
               </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
+                placeholder="Enter Email"
+              />
             </div>
           </div>
 
