@@ -1,5 +1,5 @@
 import API_BASE_URL from './config';
-import { AuthApiClient } from './auth';
+import { AuthApiClient } from './authclient';
 import { UserApiClient } from './user';
 import { SettingsApiClient } from './settings';
 import { NotificationsApiClient } from './notifications';
