@@ -6,9 +6,9 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Image from "next/image";
-// import CommentDialog from "@/components/celebration/Modals/CommentDialog";
-// import Cashgift from "@/components/celebration/Modals/Cashgift";
-// import ShareDialog from "@/components/celebration/Modals/ShareDialog";
+import CommentDialog from "@/components/celebration/Modals/CommentDialog";
+import Cashgift from "@/components/celebration/Modals/Cashgift";
+import ShareDialog from "@/components/celebration/Modals/ShareDialog";
 interface Celebration {
   type: "image" | "video";
   media: string;
@@ -36,27 +36,27 @@ export default function CelebrationDetailPage() {
   const id = Number(params.id);
   const celebration = celebrations[id];
   const actionIcons = [
-  // { src: "/icons/gift.svg", alt: "Gift", onClick: () => handleCelebrationClick() },
-  { src: "/icons/drink.svg", alt: "Drink" },
-  { src: "/icons/birthday.svg", alt: "Birthday" },
-  { src: "/icons/flower.svg", alt: "Flower" },
-  { src: "/icons/GiftCard.svg", alt: "GiftCard" },
-  { src: "/icons/resturant.svg", alt: "Resturant" },
-  { src: "/icons/wishlist.svg", alt: "Wishlist" },
-];
-  // const [commentDialogOpen, setcommentDialogOpen] = useState(false);
-  // const [shareDialogOpen, setshareDialogOpen] = useState(false);
-  // const [celebrateDialogOpen, setcelebrateDialogOpen] = useState(false);
+    { src: "/icons/gift.svg", alt: "Gift", onClick: () => handleCelebrationClick() },
+    { src: "/icons/drink.svg", alt: "Drink" },
+    { src: "/icons/birthday.svg", alt: "Birthday" },
+    { src: "/icons/flower.svg", alt: "Flower" },
+    { src: "/icons/GiftCard.svg", alt: "GiftCard" },
+    { src: "/icons/resturant.svg", alt: "Resturant" },
+    { src: "/icons/wishlist.svg", alt: "Wishlist" },
+  ];
+  const [commentDialogOpen, setcommentDialogOpen] = useState(false);
+  const [shareDialogOpen, setshareDialogOpen] = useState(false);
+  const [celebrateDialogOpen, setcelebrateDialogOpen] = useState(false);
 
-  // const handleMessageClick = () => {
-  //   setcommentDialogOpen(true);
-  // };
-  // const handleShareClick = () => {
-  //   setshareDialogOpen(true);
-  // };
-  // const handleCelebrationClick = () => {
-  //   setcelebrateDialogOpen(true);
-  // };
+  const handleMessageClick = () => {
+    setcommentDialogOpen(true);
+  };
+  const handleShareClick = () => {
+    setshareDialogOpen(true);
+  };
+  const handleCelebrationClick = () => {
+    setcelebrateDialogOpen(true);
+  };
 
   if (!celebration) return <div>Celebration not found</div>;
 
@@ -84,7 +84,7 @@ export default function CelebrationDetailPage() {
           {actionIcons.map((icon, index) => (
             <button
               key={index}
-              // onClick={icon.onClick}
+              onClick={icon.onClick}
               className="bg-black/30 backdrop-blur-sm p-2 rounded-full shadow-md transition-all duration-200"
             >
               <Image src={icon.src} alt={icon.alt} width={24} height={24} />
@@ -100,15 +100,11 @@ export default function CelebrationDetailPage() {
               <Image src="/icons/celebrate.svg" alt="Celebrate" width={40} height={40} />
               <span className="text-white text-sm">76</span>
             </div>
-            <div className="flex items-center space-x-1 cursor-pointer" 
-            // onClick={() => handleMessageClick()}
-            >
+            <div className="flex items-center space-x-1 cursor-pointer" onClick={() => handleMessageClick()}>
               <MessageCircle className="w-8 h-8 text-white" />
               <span className="text-white text-sm">45</span>
             </div>
-            <Image className="cursor-pointer" src="/icons/sharecelebration.svg" alt="Share" width={30} height={30} 
-            // onClick={() => handleShareClick()} 
-            />
+            <Image className="cursor-pointer" src="/icons/sharecelebration.svg" alt="Share" width={30} height={30} onClick={() => handleShareClick()} />
             <Image className="cursor-pointer" src="/icons/time.svg" alt="Time" width={30} height={30} />
           </div>
         </div>
@@ -122,9 +118,9 @@ export default function CelebrationDetailPage() {
         </button>
       </div>
 
-      {/* <CommentDialog commentDialogOpen={commentDialogOpen} setcommentDialogOpen={setcommentDialogOpen} />
+      <CommentDialog commentDialogOpen={commentDialogOpen} setcommentDialogOpen={setcommentDialogOpen} />
       <Cashgift celebrateDialogOpen={celebrateDialogOpen} setcelebrateDialogOpen={setcelebrateDialogOpen} />
-      <ShareDialog shareDialogOpen={shareDialogOpen} setshareDialogOpen={setshareDialogOpen} /> */}
+      <ShareDialog shareDialogOpen={shareDialogOpen} setshareDialogOpen={setshareDialogOpen} />
 
     </div>
   );

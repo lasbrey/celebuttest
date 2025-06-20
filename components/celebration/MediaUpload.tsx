@@ -4,7 +4,6 @@ import { Image as ImageIcon, Users, Music, MapPin, Heart, Trash2 } from "lucide-
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Progress } from "@/components/ui/progress";
 import { ArrowLeft } from "lucide-react";
 
 interface MediaUploadProps {
@@ -12,30 +11,9 @@ interface MediaUploadProps {
 }
 
 const MediaUpload: React.FC<MediaUploadProps> = ({ onBack }) => {
-    const uploadProgress = 40; 
 
     return (
         <div className="">
-            {/* Media Upload Section */}
-            {uploadProgress > 0 && (
-                <div className="mt-4 space-y-4 bg-white rounded-xl p-6 shadow-sm mb-5">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                                <ImageIcon className="h-6 w-6 text-orange-600" />
-                            </div>
-                            <div>
-                                <h3 className="font-medium">Dashboard recording.mp4</h3>
-                                <p className="text-sm text-gray-500">16 MB</p>
-                            </div>
-                        </div>
-                        <button className="text-gray-400 hover:text-gray-600">
-                            <Trash2 className="h-5 w-5" />
-                        </button>
-                    </div>
-                    <Progress value={uploadProgress} className="h-2" />
-                </div>
-            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <div className="bg-white rounded-2xl p-6 shadow-sm">
