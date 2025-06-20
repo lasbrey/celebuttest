@@ -15,7 +15,7 @@ export default function CreatePage() {
   const [step, setStep] = useState<number>(1);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
-  const [uploadedMedia, setUploadedMedia] = useState<File[]>([]);
+  // const [uploadedMedia, setUploadedMedia] = useState<File[]>([]);
 
   return (
     <div className="min-h-screen">

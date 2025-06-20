@@ -12,7 +12,7 @@ interface MediaUploadProps {
 }
 
 const MediaUpload: React.FC<MediaUploadProps> = ({ onBack }) => {
-    const uploadProgress = 40; // Example value
+    const uploadProgress = 40; 
 
     return (
         <div className="">
